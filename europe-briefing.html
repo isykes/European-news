@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Europe Briefing — 19 March 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0b0f1a;
+  --surface:   #111827;
+  --border:    rgba(255,255,255,0.08);
+  --text:      #e8eaf0;
+  --muted:     #8890a4;
+  --c1: #f97316;  /* War / Conflict  — amber-orange */
+  --c2: #38bdf8;  /* Europe / EU     — sky blue      */
+  --c3: #a78bfa;  /* Diplomacy       — violet        */
+  --c4: #34d399;  /* Economy / Trade — emerald       */
+  --c5: #f472b6;  /* Society / Health— pink          */
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 6vw;
+  overflow: hidden;
+}
+
+.hero-bg-blobs {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+.blob-1 { width: 55vw; height: 55vw; top: -15vw; left: -10vw; background: var(--c1); animation: drift1 14s ease-in-out infinite alternate; }
+.blob-2 { width: 40vw; height: 40vw; top: 20vw; right: -8vw;  background: var(--c2); animation: drift2 18s ease-in-out infinite alternate; }
+.blob-3 { width: 35vw; height: 35vw; bottom: -5vw; left: 30vw; background: var(--c3); animation: drift3 22s ease-in-out infinite alternate; }
+
+@keyframes drift1 { to { transform: translate(5vw, 8vw) scale(1.08); } }
+@keyframes drift2 { to { transform: translate(-6vw, 5vw) scale(0.95); } }
+@keyframes drift3 { to { transform: translate(4vw, -7vw) scale(1.1); } }
+
+.hero-inner { position: relative; z-index: 1; max-width: 860px; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  animation: slideUp 0.7s 0.1s ease forwards;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--c1);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.6; }
+}
+
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.6rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.25s ease forwards;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--c1) 0%, var(--c3) 50%, var(--c2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-lead {
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  color: var(--muted);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.4s ease forwards;
+}
+
+.source-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: slideUp 0.8s 0.55s ease forwards;
+}
+.pill {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.04);
+  color: var(--muted);
+  transition: all 0.25s;
+}
+.pill:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+a.pill { text-decoration: none; cursor: pointer; }
+
+a.src-tag {
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  display: inline-block;
+}
+a.src-tag:hover { opacity: 0.75; transform: translateY(-1px); }
+
+footer a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer a:hover { color: var(--text); }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  opacity: 0;
+  animation: slideUp 0.8s 1s ease forwards;
+}
+.scroll-cue span { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.scroll-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: scrollBob 2s ease-in-out infinite; }
+@keyframes scrollBob { 0%,100% { transform: scaleY(1); opacity: 0.5; } 50% { transform: scaleY(1.3); opacity: 1; } }
+
+/* ── SUMMARY SECTION ── */
+.summary-section {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 5rem 4vw 3rem;
+}
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.summary-intro {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+  max-width: 820px;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── THEME BLOCKS ── */
+.themes { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4rem; }
+
+.theme-block {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 200px;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.theme-block.visible { opacity: 1; transform: translateY(0); }
+
+.theme-block:hover .theme-label-col { filter: brightness(1.1); }
+
+.theme-label-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.8rem;
+  transition: filter 0.3s;
+}
+.theme-label-col h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: rgba(0,0,0,0.85);
+  margin-bottom: 0.4rem;
+}
+.theme-label-col .theme-count {
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.5);
+}
+
+.theme-content-col {
+  background: var(--surface);
+  padding: 2rem 2.2rem;
+  border: 1px solid var(--border);
+  border-left: none;
+}
+.theme-content-col p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #c4cad8;
+  margin-bottom: 1.2rem;
+}
+.theme-content-col p:last-of-type { margin-bottom: 1.4rem; }
+
+.source-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+.src-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* Theme colour mappings */
+.t-war   .theme-label-col { background: var(--c1); }
+.t-eu    .theme-label-col { background: var(--c2); }
+.t-dipl  .theme-label-col { background: var(--c3); }
+.t-econ  .theme-label-col { background: var(--c4); }
+.t-soc   .theme-label-col { background: var(--c5); }
+
+.t-war  .src-tag { background: rgba(249,115,22,0.15);  color: var(--c1); }
+.t-eu   .src-tag { background: rgba(56,189,248,0.15);  color: var(--c2); }
+.t-dipl .src-tag { background: rgba(167,139,250,0.15); color: var(--c3); }
+.t-econ .src-tag { background: rgba(52,211,153,0.15);  color: var(--c4); }
+.t-soc  .src-tag { background: rgba(244,114,182,0.15); color: var(--c5); }
+
+/* ── KEY NUMBERS ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 2px;
+  margin-bottom: 4rem;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stat-box.visible { opacity: 1; transform: translateY(0); }
+.stat-box:hover { background: rgba(255,255,255,0.04); }
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── CLOSING ANALYSIS ── */
+.analysis-box {
+  background: linear-gradient(135deg, rgba(249,115,22,0.06) 0%, rgba(56,189,248,0.06) 50%, rgba(167,139,250,0.06) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 3rem 3.5rem;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.analysis-box::before {
+  content: '"';
+  font-family: 'Fraunces', serif;
+  font-size: 18rem;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(255,255,255,0.02);
+  position: absolute;
+  top: -2rem; left: 1rem;
+  pointer-events: none;
+}
+.analysis-box h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.2rem;
+  color: var(--text);
+}
+.analysis-box p {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #b0b8cc;
+  position: relative;
+}
+.analysis-box p + p { margin-top: 1rem; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── UTILS ── */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 680px) {
+  .theme-block { grid-template-columns: 1fr; }
+  .theme-label-col { min-height: 90px; justify-content: flex-start; }
+  .hero { padding: 3rem 5vw; }
+  .analysis-box { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Thursday 19 March 2026 &nbsp;·&nbsp; Five-source synthesis
+    </div>
+    <h1>Europe<br><em>Briefing</em></h1>
+    <p class="hero-lead">A unified digest of today's most significant stories, drawn from five leading European news outlets — analysed, contextualised, and presented in one place.</p>
+    <div class="source-pills">
+      <a class="pill" href="https://www.euronews.com" target="_blank" rel="noopener">Euronews ↗</a>
+      <a class="pill" href="https://www.dw.com/en/" target="_blank" rel="noopener">Deutsche Welle ↗</a>
+      <a class="pill" href="https://www.france24.com/en/" target="_blank" rel="noopener">France 24 ↗</a>
+      <a class="pill" href="https://www.swissinfo.ch/eng" target="_blank" rel="noopener">SwissInfo ↗</a>
+      <a class="pill" href="https://euobserver.com" target="_blank" rel="noopener">EUobserver ↗</a>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="summary-section">
+  <div class="section-label">Today's Briefing</div>
+  <p class="summary-intro">Five major themes dominate European news on 19 March 2026: an expanding Middle East war reshaping global alliances, a fractious EU summit in Brussels, diplomatic reordering among world powers, economic turbulence from Hormuz to Zurich, and pressing social and scientific stories at home.</p>
+
+  <!-- THEME BLOCKS -->
+  <div class="themes">
+
+    <!-- WAR -->
+    <div class="theme-block t-war">
+      <div class="theme-label-col">
+        <h2>War &amp; Conflict</h2>
+        <span class="theme-count">5 stories · all outlets</span>
+      </div>
+      <div class="theme-content-col">
+        <p>The US-Israeli military campaign against Iran — now in its 20th day — is the single story dominating every front page. Following Israeli airstrikes that killed IRGC Basij chief Gholam Reza Soleimani and senior security official Ali Larijani, Tehran launched multi-warhead missile barrages at central Israel and struck near a US military base in the UAE, drawing Gulf neighbours Saudi Arabia, Kuwait and the UAE into interception operations. France 24 correspondents report Israeli forces have pushed into Beirut, demolishing a residential high-rise and displacing over one million Lebanese. All five outlets agree the conflict is fast widening beyond its original theatre.</p>
+        <p>On the Ukraine front, the war of attrition continues into its fourth year. Kyiv has accepted a fact-finding mission on damage to the Druzhba oil pipeline — a concession aimed at unlocking Hungary's veto on a €90 billion EU support loan. The pipeline runs through Hungary to Central Europe and its interruption has given Budapest rare diplomatic leverage over the bloc.</p>
+        <div class="source-refs">
+          <a class="src-tag" href="https://www.euronews.com/tag/iran-war" target="_blank" rel="noopener">Euronews ↗</a>
+          <a class="src-tag" href="https://www.dw.com/en/iran/t-15723" target="_blank" rel="noopener">DW ↗</a>
+          <a class="src-tag" href="https://www.france24.com/en/middle-east/" target="_blank" rel="noopener">France 24 ↗</a>
+          <a class="src-tag" href="https://euobserver.com/topic/ukraine/" target="_blank" rel="noopener">EUobserver ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- EU -->
+    <div class="theme-block t-eu">
+      <div class="theme-label-col">
+        <h2>European Union</h2>
+        <span class="theme-count">6 stories · 4 outlets</span>
+      </div>
+      <div class="theme-content-col">
+        <p>The EU summit in Brussels — planned as a landmark debate on European competitiveness — has been hijacked by two explosive rows. First, Hungary's ongoing veto on a €90 billion Ukraine loan continues to paralyse bloc-wide support for Kyiv. Second, a blocking minority of member states led by Italy and Poland is pushing to weaken the EU's Emissions Trading System (carbon pricing), threatening to unravel one of Europe's most significant climate tools. Both disputes are crowding out the summit's original ambitions, to the frustration of the Commission.</p>
+        <p>In parallel, the Commission unveiled its "28th regime" proposal — an optional EU-wide business code intended to let companies operate under a single ruleset rather than 27 national legal systems. Cyprus invoked Article 42.7 of the EU treaty (the mutual assistance clause) following the Iran conflict's spillover, prompting France and other allies to deploy warships to protect the island — a historic precedent for EU collective defence outside NATO.</p>
+        <div class="source-refs">
+          <a class="src-tag" href="https://euobserver.com/section/eu-politics/" target="_blank" rel="noopener">EUobserver ↗</a>
+          <a class="src-tag" href="https://www.france24.com/en/europe/" target="_blank" rel="noopener">France 24 ↗</a>
+          <a class="src-tag" href="https://www.euronews.com/my-europe" target="_blank" rel="noopener">Euronews ↗</a>
+          <a class="src-tag" href="https://www.dw.com/en/europe/s-1433" target="_blank" rel="noopener">DW ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIPLOMACY -->
+    <div class="theme-block t-dipl">
+      <div class="theme-label-col">
+        <h2>Diplomacy &amp; Alliances</h2>
+        <span class="theme-count">4 stories · 3 outlets</span>
+      </div>
+      <div class="theme-content-col">
+        <p>A far-reaching diplomatic realignment is under way. German Chancellor Friedrich Merz travelled to China on his first official visit since taking office, seeking new global trading partners to replace the vacuum left by the Trump administration's retreat from traditional alliances. Berlin is also navigating a hard refusal by Germany, the UK and other EU states to send warships to the Strait of Hormuz, despite intense White House pressure — a rupture that is exposing deep cracks in transatlantic relations.</p>
+        <p>France is charting its own course: President Macron's announcement of expanded French nuclear warheads and potential sharing with European allies signals Paris's intent to position itself as the continent's security guarantor. Poland's Prime Minister Tusk is searching for a "Plan B" on defence spending after the Polish president vetoed the landmark Safe Loans bill. Meanwhile, a DW journalist arrested in Turkey highlights the continuing pressure on press freedom inside a NATO member state.</p>
+        <div class="source-refs">
+          <a class="src-tag" href="https://www.dw.com/en/foreign-policy/s-9107" target="_blank" rel="noopener">DW ↗</a>
+          <a class="src-tag" href="https://www.france24.com/en/france/" target="_blank" rel="noopener">France 24 ↗</a>
+          <a class="src-tag" href="https://euobserver.com/section/eu-and-the-world/" target="_blank" rel="noopener">EUobserver ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ECONOMY -->
+    <div class="theme-block t-econ">
+      <div class="theme-label-col">
+        <h2>Economy &amp; Trade</h2>
+        <span class="theme-count">3 stories · 3 outlets</span>
+      </div>
+      <div class="theme-content-col">
+        <p>The economic fallout from the Hormuz conflict is spreading fast. Switzerland has downgraded its 2026 growth forecast, citing spiking energy prices and disrupted global supply chains. Swiss officials stressed that domestic energy reserves remain sufficient, but acknowledged that a prolonged closure of the strait — through which roughly 20% of the world's seaborne oil passes — would test that resilience. The EU's carbon market debate at the summit adds another layer of economic uncertainty, with industrial lobbies arguing that high carbon costs make European manufacturers uncompetitive against cheaper imports.</p>
+        <p>The Commission's "28th regime" business code proposal is being framed partly as an economic stimulus measure, intended to reduce red tape for companies operating across multiple EU member states. Germany's renewed push for a closer China trade relationship under Merz also reflects the urgency felt in Europe's largest economy to hedge against US tariff uncertainty and Middle East supply shocks.</p>
+        <div class="source-refs">
+          <a class="src-tag" href="https://www.swissinfo.ch/eng/business/" target="_blank" rel="noopener">SwissInfo ↗</a>
+          <a class="src-tag" href="https://euobserver.com/section/economy/" target="_blank" rel="noopener">EUobserver ↗</a>
+          <a class="src-tag" href="https://www.dw.com/en/business/s-1431" target="_blank" rel="noopener">DW ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIETY -->
+    <div class="theme-block t-soc">
+      <div class="theme-label-col">
+        <h2>Society, Science &amp; Home</h2>
+        <span class="theme-count">5 stories · 3 outlets</span>
+      </div>
+      <div class="theme-content-col">
+        <p>Away from the geopolitical drama, several stories reflect profound change at home. CERN scientists announced the detection of a new exotic particle — four times heavier than a proton and composed of two charm quarks and a down quark — opening new avenues in particle physics. Separately, dengue virus was detected in tiger mosquitoes north of the Alps in Basel for the first time, a milestone linked to northward species migration driven by rising temperatures.</p>
+        <p>In the Netherlands, a targeted explosion damaged a Jewish school in Amsterdam overnight with no casualties, raising security concerns. In Switzerland, parliament backed a CHF 50 emergency hospital co-payment in an effort to reduce pressure on emergency departments. And in Germany, a growing nepotism scandal within the AfD is fuelling questions about the far-right party's internal culture ahead of a period of heightened political scrutiny.</p>
+        <div class="source-refs">
+          <a class="src-tag" href="https://www.swissinfo.ch/eng/science/" target="_blank" rel="noopener">SwissInfo ↗</a>
+          <a class="src-tag" href="https://www.euronews.com/news/europe/netherlands" target="_blank" rel="noopener">Euronews ↗</a>
+          <a class="src-tag" href="https://www.dw.com/en/germany/s-1432" target="_blank" rel="noopener">DW ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /themes -->
+
+  <!-- KEY NUMBERS -->
+  <div class="section-label">At a Glance</div>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c1)">20</div>
+      <div class="stat-label">Days of Iran War</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c2)">€90bn</div>
+      <div class="stat-label">Ukraine loan blocked</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c3)">27+1</div>
+      <div class="stat-label">EU "28th regime"</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c4)">CHF 50</div>
+      <div class="stat-label">Swiss hospital fee</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c5)">1M+</div>
+      <div class="stat-label">Lebanese displaced</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--c1)">42.7</div>
+      <div class="stat-label">EU treaty article invoked</div>
+    </div>
+  </div>
+
+  <!-- ANALYSIS -->
+  <div class="analysis-box">
+    <h3>Editorial Analysis</h3>
+    <p>Taken together, today's reporting from five outlets tells a single story: the international order that defined Europe for 80 years is fracturing simultaneously along multiple fault lines. The US-Israeli campaign against Iran is not merely a Middle East conflict — it is a stress test of NATO cohesion, a trigger for energy-price shocks, a catalyst for EU defence unity and a driver of German diplomatic hedging toward China. Every headline in today's digest connects back to this central rupture.</p>
+    <p>Europe's response is fragmented but not paralysed. France is asserting nuclear leadership, the EU is invoking mutual-defence clauses it has never used in earnest, and smaller states like Switzerland are quietly stress-testing their supply chains. The EU summit may be consumed by Hungary's veto and the carbon market row, but beneath those political skirmishes lies a genuine, urgent attempt to build a more self-reliant Europe — one that no longer assumes an unconditional American umbrella. Whether the bloc can hold together long enough to build that capacity remains the defining question of 2026.</p>
+  </div>
+
+</main>
+
+<footer>
+  <span>Europe Briefing &nbsp;·&nbsp; 19 March 2026</span>
+  <span>
+    Sources: 
+    <a href="https://www.euronews.com" target="_blank" rel="noopener">Euronews</a> · 
+    <a href="https://www.dw.com/en/" target="_blank" rel="noopener">DW</a> · 
+    <a href="https://www.france24.com/en/" target="_blank" rel="noopener">France 24</a> · 
+    <a href="https://www.swissinfo.ch/eng" target="_blank" rel="noopener">SwissInfo</a> · 
+    <a href="https://euobserver.com" target="_blank" rel="noopener">EUobserver</a>
+  </span>
+</footer>
+
+<script>
+  // Intersection Observer for scroll-triggered animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.theme-block, .stat-box').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
