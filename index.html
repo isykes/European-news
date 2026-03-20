@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live European Intelligence OS</title>
+    <title>European News Intelligence OS</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -12,9 +12,9 @@
             --accent: #3b82f6;
             --ticker-bg: #ef4444;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
         
-        /* THE TICKER */
+        /* THE TICKER - Now restored at the top */
         .ticker-wrap {
             width: 100%; overflow: hidden; background: var(--ticker-bg);
             color: white; padding: 12px 0; font-weight: 800; position: sticky; top: 0; z-index: 1000;
@@ -33,11 +33,12 @@
         }
         .status { font-size: 0.8rem; color: #22c55e; margin-bottom: 10px; font-weight: bold; }
 
-        /* THE GRID */
+        /* THE GRID - 9 Sources */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
         .card { 
             background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
             border-top: 5px solid var(--clr); transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
         .card:hover { transform: translateY(-5px); background: #243147; }
         .source-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
@@ -52,18 +53,21 @@
 
     <div class="ticker-wrap">
         <div id="live-ticker" class="ticker">
-            <span>SYNCING LIVE FEEDS... STANDBY...</span>
+            <span>SYNCING 9 LIVE INTELLIGENCE FEEDS... STANDBY...</span>
         </div>
     </div>
 
     <div class="container">
         <header class="aggregate-box">
-            <div class="status">● SYSTEM LIVE / AUTO-REFRESH ACTIVE</div>
+            <div class="status">● SYSTEM LIVE / MARCH 2026 AUTO-REFRESH ACTIVE</div>
             <h1>Continental Intelligence Synthesis</h1>
-            <p id="dynamic-summary">Analyzing live data to generate 2026 strategic summary...</p>
+            <p id="dynamic-summary">
+                The European narrative is currently a <strong>triangulation of crisis</strong>. 
+                From the drones in the East to the energy shifts in the Mediterranean and the security hardening in the Nordics, the continent is moving into a high-alert <strong>"Sovereignty Mode."</strong> This dashboard synthesizes the truth-checking of the West with the frontline reality of the East.
+            </p>
         </header>
 
-        <div id="id-grid" class="grid"></div>
+        <div id="news-grid" class="grid"></div>
     </div>
 
     <script>
@@ -73,51 +77,49 @@
             { name: "Deutsche Welle", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
             { name: "Kyiv Independent", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
             { name: "EL PAÍS English", clr: "#ffffff", rss: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/english/portada" },
-            { name: "Yle News", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
-            { name: "The Local Sweden", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
+            { name: "Yle News (Finland)", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
+            { name: "The Local (Sweden)", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
             { name: "Notes from Poland", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
             { name: "Euronews", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
         ];
 
         async function updateDashboard() {
-            const grid = document.getElementById('id-grid');
+            const grid = document.getElementById('news-grid');
             const ticker = document.getElementById('live-ticker');
             grid.innerHTML = '';
             ticker.innerHTML = '';
 
             for (const s of newsSources) {
                 try {
-                    // Fetching through rss2json proxy
                     const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.rss)}`);
                     const data = await res.json();
-                    const topStory = data.items[0];
+                    
+                    if (data.items && data.items.length > 0) {
+                        const topStory = data.items[0];
 
-                    // Create Card
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.style.setProperty('--clr', s.clr);
-                    card.innerHTML = `
-                        <div class="source-title">${s.name}</div>
-                        <div class="live-headline"><strong>LATEST:</strong> ${topStory.title}</div>
-                        <div class="time">PUBLISHED: ${new Date(topStory.pubDate).toLocaleTimeString()}</div>
-                        <a href="${topStory.link}" target="_blank" style="color:var(--clr); font-size:0.8rem; margin-top:10px; display:block;">Read Full Intel →</a>
-                    `;
-                    grid.appendChild(card);
+                        // Create Card
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.style.setProperty('--clr', s.clr);
+                        card.innerHTML = `
+                            <div class="source-title">${s.name}</div>
+                            <div class="live-headline"><strong>LATEST:</strong> ${topStory.title}</div>
+                            <div class="time">UPDATED: ${new Date(topStory.pubDate).toLocaleTimeString()}</div>
+                            <a href="${topStory.link}" target="_blank" style="color:var(--clr); font-size:0.8rem; margin-top:10px; display:block; text-decoration:none; font-weight:bold;">OPEN SOURCE →</a>
+                        `;
+                        grid.appendChild(card);
 
-                    // Add to Ticker
-                    const span = document.createElement('span');
-                    span.innerText = `🔴 ${s.name.toUpperCase()}: ${topStory.title}`;
-                    ticker.appendChild(span);
-
+                        // Add to Ticker
+                        const span = document.createElement('span');
+                        span.innerText = `🔴 ${s.name.toUpperCase()}: ${topStory.title}`;
+                        ticker.appendChild(span);
+                    }
                 } catch (err) {
                     console.error("Link broken for", s.name);
                 }
             }
-            
-            document.getElementById('dynamic-summary').innerText = "Strategic focus for today: High-attrition conflicts in the East are driving energy and defense policy shifts in the West. All sources are currently synchronized.";
         }
 
-        // Initialize on load
         updateDashboard();
     </script>
 </body>
