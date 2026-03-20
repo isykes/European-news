@@ -1,0 +1,31 @@
+name: Daily News Briefing
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # Runs every day at 7am UTC
+  workflow_dispatch:       # Allows manual trigger from GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests feedparser
+
+      - name: Fetch feeds and rebuild page
+        run: python build.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "Daily briefing update $(date +%Y-%m-%d)"
+          git push
