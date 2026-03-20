@@ -2,78 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>EU Strategic Command | 9-Source Stable</title>
+    <title>EU Strategic Command | Stable Sync</title>
     <style>
         :root { --bg: #020617; --card: #0f172a; --text: #f1f5f9; --accent: #3b82f6; --border: #1e293b; --red: #7f1d1d; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
-        
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
         .top-bar { display: grid; grid-template-columns: 1fr 180px; background: var(--red); position: sticky; top: 0; z-index: 1000; align-items: center; }
         .ticker-wrap { overflow: hidden; padding: 10px 0; }
         .ticker { display: inline-block; white-space: nowrap; animation: march 80s linear infinite; }
         @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
         .ticker span { margin-right: 60px; text-transform: uppercase; font-size: 0.8rem; font-weight: 800; }
         .clock { background: rgba(0,0,0,0.4); padding: 10px; text-align: center; font-family: monospace; font-size: 1rem; border-left: 1px solid rgba(255,255,255,0.1); }
-
         .container { max-width: 1450px; margin: 0 auto; padding: 1.5rem; }
-        .briefing { background: linear-gradient(135deg, #1e293b, #020617); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid var(--accent); border: 1px solid var(--border); }
-        .briefing p { margin: 0; font-size: 1.05rem; opacity: 0.9; font-weight: 300; line-height: 1.6; }
-
+        .briefing { background: linear-gradient(135deg, #1e293b, #020617); padding: 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid var(--accent); border: 1px solid var(--border); }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 240px; display: flex; flex-direction: column; }
-        
-        .geo { font-size: 0.65rem; text-transform: uppercase; color: var(--clr); font-weight: 900; margin-bottom: 6px; letter-spacing: 1px; }
-        .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        .item { margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #334155; font-size: 0.9rem; }
+        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 220px; display: flex; flex-direction: column; opacity: 0.6; transition: 0.5s; }
+        .card.active { opacity: 1; border-color: var(--accent); }
+        .geo { font-size: 0.65rem; text-transform: uppercase; color: var(--clr); font-weight: 900; margin-bottom: 6px; }
+        .title { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+        .item { margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #334155; font-size: 0.85rem; }
         .link { text-decoration: none; color: #cbd5e1; display: block; line-height: 1.4; }
-        .link:hover { color: #fff; }
-        
-        .status-msg { font-size: 0.75rem; margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .retry-btn { cursor: pointer; color: var(--accent); text-decoration: underline; font-weight: bold; }
-        .loading-shimmer { color: #475569; font-style: italic; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .status { font-size: 0.65rem; margin-top: auto; padding-top: 10px; font-family: monospace; color: #475569; }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING SECURE INTEL STREAM... MARCH 20, 2026...</span></div></div>
+    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING SEQUENTIAL INTEL SCAN... MARCH 20, 2026...</span></div></div>
     <div id="clock" class="clock">00:00:00</div>
 </div>
 
 <div class="container">
     <header class="briefing">
-        <h2 style="margin:0 0 10px 0; color:var(--accent); font-size:0.9rem; letter-spacing:2px;">EXECUTIVE SUMMARY</h2>
-        <p>Europe tracks two simultaneous fronts: <strong>The Industrial Energy Crisis</strong> in the West and <strong>Total Defense Readiness</strong> across the Nordic-Eastern Shield. This terminal provides 27 points of verification across 9 critical geographic vectors.</p>
+        <p style="margin:0; font-size:0.95rem; font-weight:300;"><strong>Strategic Synthesis:</strong> Monitoring 27 vectors across the Industrial Core and Eastern Shield. Sequential loading enabled to bypass security throttling.</p>
     </header>
     <div id="grid" class="grid"></div>
 </div>
 
 <script>
     const sources = [
-        { id: "bbc", name: "BBC News", geo: "UK/WORLD", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
-        { id: "f24", name: "France 24", geo: "DIPLOMATIC", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
+        { id: "bbc", name: "BBC News", geo: "GLOBAL", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+        { id: "f24", name: "France 24", geo: "DIPLOMACY", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
         { id: "dw", name: "Deutsche Welle", geo: "INDUSTRIAL", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
-        { id: "kyiv", name: "Kyiv Independent", geo: "FRONTLINE", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
-        { id: "elpais", name: "EL PAÍS English", geo: "MEDITERRANEAN", clr: "#ffffff", rss: "https://english.elpais.com/rss/international/" },
-        { id: "yle", name: "Yle News (FI)", geo: "NORDIC SHIELD", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
-        { id: "local", name: "The Local (SE)", geo: "NORDIC POLICY", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
-        { id: "nfp", name: "Notes from Poland", geo: "CENTRAL EU", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
+        { id: "kyiv", name: "Kyiv Independent", geo: "FRONT", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
+        { id: "elpais", name: "EL PAÍS", geo: "MED", clr: "#ffffff", rss: "https://english.elpais.com/rss/international/" },
+        { id: "yle", name: "Yle News", geo: "NORDIC", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
+        { id: "local", name: "The Local", geo: "POLICY", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
+        { id: "nfp", name: "Notes/Poland", geo: "CENTRAL", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
         { id: "euronews", name: "Euronews", geo: "EU CORE", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
     ];
 
     function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour12: false}); }
     setInterval(updateClock, 1000);
 
-    async function fetchIntel(s) {
-        const target = document.getElementById(`feed-${s.id}`);
-        target.innerHTML = '<span class="loading-shimmer">Syncing Data Stream...</span>';
+    async function fetchOne(s) {
+        const card = document.getElementById(`card-${s.id}`);
+        const feedBox = document.getElementById(`feed-${s.id}`);
+        const status = document.getElementById(`status-${s.id}`);
         
-        // Proxy Rotation: Primary = corsproxy.io, Secondary = allorigins
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(s.rss)}`;
-        
+        card.classList.add('active');
+        status.innerText = "SWEEPING...";
+
         try {
-            const res = await fetch(proxyUrl);
-            if (!res.ok) throw new Error("Throttled");
-            const text = await res.text();
-            const xml = new DOMParser().parseFromString(text, "text/xml");
+            // Using a rotating proxy strategy
+            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(s.rss)}`);
+            const data = await res.json();
+            const xml = new DOMParser().parseFromString(data.contents, "text/xml");
             const items = Array.from(xml.querySelectorAll("item")).slice(0, 3);
+
+            let html = '';
+            items.forEach(item => {
+                const title = item.querySelector("title").textContent;
+                const link = item.querySelector("link").textContent;
+                html += `<div class="item"><a href="${link}" target="_blank" class="link">${title}</a></div>`;
+            });
+            feedBox.innerHTML = html;
+            status.innerHTML = '<span style="color:#22c55e">NOMINAL</span>';
+
+            const span = document.createElement('span');
+            span.innerText = `[${s.name.toUpperCase()}]: ${items[0].querySelector("title").textContent} • `;
+            document.getElementById('ticker').appendChild(span);
+
+        } catch (e) {
+            status.innerHTML = '<span style="color:#ef4444">THROTTLED - RE-SCANNING IN 30s</span>';
+            setTimeout(() => fetchOne(s), 30000);
+        }
+    }
+
+    // Step 1: Build the Shells
+    const grid = document.getElementById('grid');
+    sources.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.id = `card-${s.id}`;
+        div.style.setProperty('--clr', s.clr);
+        div.innerHTML = `<div class="geo">${s.geo}</div><div class="title">${s.name}</div><div id="feed-${s.id}"></div><div class="status" id="status-${s.id}">STANDBY</div>`;
+        grid.appendChild(div);
+    });
+
+    // Step 2: Trigger Sequence (1.5s gap between each)
+    async function runSweep() {
+        for (const s of sources) {
+            await fetchOne(s);
+            await new Promise(r => setTimeout(r, 1500)); 
+        }
+    }
+    runSweep();
+</script>
+</body>
+</html>
