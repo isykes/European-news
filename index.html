@@ -3,81 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Intelligence Dashboard</title>
+    <title>EU Strategic Command | 9-Source Sync</title>
     <style>
         :root { --bg: #020617; --card: #0f172a; --text: #f1f5f9; --accent: #3b82f6; --border: #1e293b; --red: #7f1d1d; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
         
-        .top-bar { display: grid; grid-template-columns: 1fr 180px; background: var(--red); position: sticky; top: 0; z-index: 1000; align-items: center; }
+        .top-bar { display: grid; grid-template-columns: 1fr 180px; background: var(--red); position: sticky; top: 0; z-index: 1000; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .ticker-wrap { overflow: hidden; padding: 10px 0; }
         .ticker { display: inline-block; white-space: nowrap; animation: march 80s linear infinite; }
         @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .ticker span { margin-right: 60px; text-transform: uppercase; font-size: 0.8rem; font-weight: 800; }
+        .ticker span { margin-right: 60px; text-transform: uppercase; font-size: 0.8rem; font-weight: 800; color: #fff; }
         .clock { background: rgba(0,0,0,0.4); padding: 10px; text-align: center; font-family: monospace; font-size: 1rem; border-left: 1px solid rgba(255,255,255,0.1); }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+        .container { max-width: 1450px; margin: 0 auto; padding: 1.5rem; }
         .briefing { background: linear-gradient(135deg, #1e293b, #020617); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid var(--accent); border: 1px solid var(--border); }
-        .briefing h2 { margin: 0 0 8px 0; font-size: 0.9rem; letter-spacing: 2px; color: var(--accent); }
-        .briefing p { margin: 0; font-size: 1rem; opacity: 0.85; font-weight: 300; line-height: 1.5; }
+        .briefing h2 { margin: 0 0 8px 0; font-size: 0.9rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+        .briefing p { margin: 0; font-size: 1.05rem; opacity: 0.9; font-weight: 300; line-height: 1.6; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 220px; transition: 0.2s; }
-        .card:hover { transform: translateY(-3px); background: #161e2e; }
+        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 240px; display: flex; flex-direction: column; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); border-color: var(--accent); }
         
-        .geo { font-size: 0.6rem; text-transform: uppercase; color: var(--clr); font-weight: 900; margin-bottom: 5px; opacity: 0.8; }
-        .title { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
-        .item { margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #334155; font-size: 0.85rem; }
-        .link { text-decoration: none; color: #cbd5e1; display: block; line-height: 1.4; }
-        .link:hover { color: var(--accent); }
-        .status { font-size: 0.7rem; margin-top: auto; opacity: 0.5; font-family: monospace; }
+        .geo { font-size: 0.65rem; text-transform: uppercase; color: var(--clr); font-weight: 900; margin-bottom: 6px; letter-spacing: 1px; }
+        .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .item { margin-bottom: 12px; padding-left: 12px; border-left: 2px solid #334155; font-size: 0.9rem; }
+        .link { text-decoration: none; color: #cbd5e1; display: block; line-height: 1.4; transition: 0.2s; }
+        .link:hover { color: #fff; transform: translateX(3px); }
+        .loading { font-size: 0.8rem; color: #475569; font-style: italic; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING SECURE INTEL STREAM... MARCH 20, 2026... STANDBY...</span></div></div>
+    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING MULTI-SOURCE SYNC... MARCH 20, 2026... STANDBY FOR INTEL...</span></div></div>
     <div id="clock" class="clock">00:00:00</div>
 </div>
 
 <div class="container">
     <header class="briefing">
-        <h2>STRATEGIC BRIEFING: MARCH 2026</h2>
-        <p>Europe tracks two simultaneous fronts: <strong>The Energy Scarcity Crisis</strong> in the West and <strong>Total Defense Readiness</strong> in the East. This dashboard provides 27 points of verification across 9 critical geographic vectors.</p>
+        <h2>Executive Briefing: March 2026</h2>
+        <p>Europe tracks two simultaneous fronts: <strong>The Industrial Energy Crisis</strong> in the West and <strong>Total Defense Readiness</strong> across the Nordic-Eastern Shield. This terminal provides real-time verification across 9 critical geographic vectors.</p>
     </header>
     <div id="grid" class="grid"></div>
 </div>
 
 <script>
     const sources = [
-        { name: "BBC News", geo: "UK/WORLD", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
-        { name: "France 24", geo: "DIPLOMATIC", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
-        { name: "Deutsche Welle", geo: "INDUSTRIAL", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
-        { name: "Kyiv Independent", geo: "FRONTLINE", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
-        { name: "EL PAÍS English", geo: "MEDITERRANEAN", clr: "#ffffff", rss: "https://english.elpais.com/rss/international/" },
-        { name: "Yle News (FI)", geo: "NORDIC SHIELD", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
-        { name: "The Local (SE)", geo: "NORDIC POLICY", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
-        { name: "Notes from Poland", geo: "CENTRAL EU", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
-        { name: "Euronews", geo: "EU CORE", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
+        { id: "bbc", name: "BBC News", geo: "UK/WORLD", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+        { id: "f24", name: "France 24", geo: "DIPLOMATIC", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
+        { id: "dw", name: "Deutsche Welle", geo: "INDUSTRIAL", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
+        { id: "kyiv", name: "Kyiv Independent", geo: "FRONTLINE", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
+        { id: "elpais", name: "EL PAÍS English", geo: "MEDITERRANEAN", clr: "#ffffff", rss: "https://english.elpais.com/rss/international/" },
+        { id: "yle", name: "Yle News (FI)", geo: "NORDIC SHIELD", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
+        { id: "local", name: "The Local (SE)", geo: "NORDIC POLICY", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
+        { id: "nfp", name: "Notes from Poland", geo: "CENTRAL EU", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
+        { id: "euronews", name: "Euronews", geo: "EU CORE", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
     ];
 
     function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour12: false}); }
     setInterval(updateClock, 1000);
 
-    async function loadSource(s) {
-        const grid = document.getElementById('grid');
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.setProperty('--clr', s.clr);
-        card.innerHTML = `<div class="geo">${s.geo}</div><div class="title">${s.name}</div><div id="load-${s.name.replace(/\s/g,'')}">Syncing...</div>`;
-        grid.appendChild(card);
-
+    async function fetchWithRetry(s, attempt = 1) {
+        const container = document.getElementById(`feed-${s.id}`);
         try {
-            // Using AllOrigins CORS Proxy to bypass rss2json limits
-            const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(s.rss)}`);
-            const data = await response.json();
-            const parser = new DOMParser();
-            const xml = parser.parseFromString(data.contents, "text/xml");
+            // Using corsproxy.io - a more reliable prefix-based proxy
+            const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(s.rss)}`);
+            const text = await res.text();
+            const xml = new DOMParser().parseFromString(text, "text/xml");
             const items = Array.from(xml.querySelectorAll("item")).slice(0, 3);
+
+            if (items.length === 0) throw new Error("Empty feed");
 
             let html = '';
             items.forEach(item => {
@@ -86,18 +82,38 @@
                 html += `<div class="item"><a href="${link}" target="_blank" class="link">${title}</a></div>`;
             });
 
-            document.getElementById(`load-${s.name.replace(/\s/g,'')}`).outerHTML = html + `<div class="status">SYNC COMPLETE</div>`;
+            container.innerHTML = html;
             
+            // Add top story to ticker
             const span = document.createElement('span');
             span.innerText = `[${s.name.toUpperCase()}]: ${items[0].querySelector("title").textContent} • `;
             document.getElementById('ticker').appendChild(span);
+
         } catch (e) {
-            document.getElementById(`load-${s.name.replace(/\s/g,'')}`).innerHTML = `<span style="color:#ef4444">Connection Offline.</span>`;
+            if (attempt < 3) {
+                container.innerHTML = `<span class="loading">Retry attempt ${attempt}...</span>`;
+                setTimeout(() => fetchWithRetry(s, attempt + 1), 2000);
+            } else {
+                container.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Sync Failed. Proxy Throttled.</span>`;
+            }
         }
     }
 
-    // Load all 9 in parallel for speed
-    sources.forEach(s => loadSource(s));
+    // Initialize the Grid Structure immediately
+    const grid = document.getElementById('grid');
+    sources.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.style.setProperty('--clr', s.clr);
+        card.innerHTML = `
+            <div class="geo">${s.geo}</div>
+            <div class="title">${s.name}</div>
+            <div id="feed-${s.id}"><span class="loading">Establishing handshake...</span></div>
+        `;
+        grid.appendChild(card);
+        // Stagger the calls to avoid simultaneous proxy hitting
+        setTimeout(() => fetchWithRetry(s), sources.indexOf(s) * 400);
+    });
 </script>
 </body>
 </html>
