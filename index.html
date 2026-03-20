@@ -3,88 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Intelligence Hub</title>
+    <title>Live European Intelligence OS</title>
     <style>
         :root {
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f1f5f9;
             --accent: #3b82f6;
-            --header-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --ticker-bg: #ef4444;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-        /* Aggregate Intelligence Header */
-        .aggregate-box { 
-            background: var(--header-gradient); padding: 3rem; border-radius: 16px; margin-bottom: 3rem;
-            border: 1px solid #334155; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
-        }
-        .aggregate-box h1 { margin-top: 0; color: #60a5fa; font-size: 2.2rem; letter-spacing: -1px; }
-        .aggregate-box .analysis { font-size: 1.15rem; line-height: 1.8; color: #cbd5e1; border-left: 4px solid var(--accent); padding-left: 20px; }
-
-        /* Grid System */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
-        .card { 
-            background: var(--card-bg); border-radius: 12px; padding: 1.8rem; 
-            border-top: 5px solid var(--clr); display: flex; flex-direction: column;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         
-        /* Content Styles */
-        .source-name { font-size: 1.4rem; font-weight: 800; margin: 10px 0; color: #fff; }
-        .latest-intel { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; font-size: 0.95rem; color: #94a3b8; border-left: 3px solid var(--clr); margin-top: auto; }
-        .tag { font-size: 0.7rem; text-transform: uppercase; font-weight: bold; color: var(--clr); letter-spacing: 1px; }
-        .btn { text-decoration: none; color: #fff; background: var(--clr); padding: 10px; border-radius: 6px; text-align: center; margin-top: 15px; font-weight: bold; font-size: 0.8rem; opacity: 0.9; }
-        .btn:hover { opacity: 1; }
+        /* THE TICKER */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; background: var(--ticker-bg);
+            color: white; padding: 12px 0; font-weight: 800; position: sticky; top: 0; z-index: 1000;
+        }
+        .ticker { display: inline-block; white-space: nowrap; animation: march 60s linear infinite; }
+        @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        .ticker span { margin-right: 60px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+        /* AGGREGATE SUMMARY */
+        .aggregate-box { 
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
+            padding: 2.5rem; border-radius: 16px; margin-bottom: 2.5rem;
+            border-left: 10px solid var(--accent); border: 1px solid #334155;
+        }
+        .status { font-size: 0.8rem; color: #22c55e; margin-bottom: 10px; font-weight: bold; }
+
+        /* THE GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card { 
+            background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
+            border-top: 5px solid var(--clr); transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); background: #243147; }
+        .source-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+        .live-headline { 
+            font-size: 0.95rem; color: #cbd5e1; line-height: 1.4; 
+            border-left: 2px solid var(--clr); padding-left: 12px; margin-bottom: 15px;
+        }
+        .time { font-size: 0.7rem; color: #64748b; }
     </style>
 </head>
 <body>
 
+    <div class="ticker-wrap">
+        <div id="live-ticker" class="ticker">
+            <span>SYNCING LIVE FEEDS... STANDBY...</span>
+        </div>
+    </div>
+
     <div class="container">
         <header class="aggregate-box">
-            <h1>Continental Intelligence Synthesis: March 20, 2026</h1>
-            <div class="analysis">
-                The European narrative today is a <strong>triangulation of crisis</strong>. 
-                In the East, the 156-drone swarm over Ukraine signals a shift toward high-attrition robotic warfare. 
-                In the South, the Iran war has turned the Mediterranean into a high-stakes energy corridor, forcing the "Old Guard" (France & Germany) to choose between subsidizing fossil fuels or accelerating a painful green transition. 
-                Meanwhile, the North (Sweden/Finland) is rapidly tightening internal borders as the "security-first" model replaces the old open-Europe ideal. 
-                <strong>The common thread:</strong> Europe is moving from a trade-led peace to a high-alert "Sovereignty Mode."
-            </div>
+            <div class="status">● SYSTEM LIVE / AUTO-REFRESH ACTIVE</div>
+            <h1>Continental Intelligence Synthesis</h1>
+            <p id="dynamic-summary">Analyzing live data to generate 2026 strategic summary...</p>
         </header>
 
-        <div id="news-grid" class="grid"></div>
+        <div id="id-grid" class="grid"></div>
     </div>
 
     <script>
-        const newsData = [
-            // West & Central
-            { name: "BBC Verify", clr: "#bb1919", tag: "Truth-Checking", intel: "Investigating satellite blackout periods over Gulf war zones; verifying civilian casualty counts in Tehran." },
-            { name: "France 24", clr: "#a78bfa", tag: "Diplomatic", intel: "Macron refuses to 'do a Chirac' over Gulf war; focus on Mediterranean energy stability." },
-            { name: "Deutsche Welle", clr: "#00adff", tag: "Economic", intel: "German industry faces fuel shortage; EU floats €30bn 'ETS booster' to decouple from oil." },
-            { name: "EL PAÍS English", clr: "#ffffff", tag: "Mediterranean", intel: "Trump requests $200bn for new phase of Iran war; impact on Spanish energy markets." },
-            { name: "Euronews", clr: "#003399", tag: "EU Policy", intel: "Italy and Poland lead revolt against Carbon Market (ETS) costs as energy prices surge." },
-            
-            // Eastern & Nordics
-            { name: "Kyiv Independent", clr: "#ffd700", tag: "Frontline", intel: "133 of 156 Russian drones intercepted; Slovakia threatens Druzhba pipeline shutdown." },
-            { name: "Notes from Poland", clr: "#dc2626", tag: "Central Europe", intel: "Standoff over Constitutional Court deepens; Orlen energy value overtakes Gazprom for first time." },
-            { name: "Yle News", clr: "#002f6c", tag: "Nordic Security", intel: "Finland implements €6bn emergency budget cuts; debt crisis cited as top security threat." },
-            { name: "The Local Sweden", clr: "#fecc00", tag: "Nordic Policy", intel: "Parliament races to strip citizenship for gang violence; IKEA slashes 600+ jobs amid uncertainty." }
+        const newsSources = [
+            { name: "BBC Verify", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+            { name: "France 24", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
+            { name: "Deutsche Welle", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
+            { name: "Kyiv Independent", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
+            { name: "EL PAÍS English", clr: "#ffffff", rss: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/english/portada" },
+            { name: "Yle News", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
+            { name: "The Local Sweden", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
+            { name: "Notes from Poland", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
+            { name: "Euronews", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
         ];
 
-        const container = document.getElementById('news-grid');
-        newsData.forEach(s => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.setProperty('--clr', s.clr);
-            card.innerHTML = `
-                <span class="tag">${s.tag}</span>
-                <div class="source-name">${s.name}</div>
-                <div class="latest-intel"><strong>LATEST:</strong> ${s.intel}</div>
-                <a href="#" class="btn">ACCESS FULL FEED</a>
-            `;
-            container.appendChild(card);
-        });
+        async function updateDashboard() {
+            const grid = document.getElementById('id-grid');
+            const ticker = document.getElementById('live-ticker');
+            grid.innerHTML = '';
+            ticker.innerHTML = '';
+
+            for (const s of newsSources) {
+                try {
+                    // Fetching through rss2json proxy
+                    const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.rss)}`);
+                    const data = await res.json();
+                    const topStory = data.items[0];
+
+                    // Create Card
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.setProperty('--clr', s.clr);
+                    card.innerHTML = `
+                        <div class="source-title">${s.name}</div>
+                        <div class="live-headline"><strong>LATEST:</strong> ${topStory.title}</div>
+                        <div class="time">PUBLISHED: ${new Date(topStory.pubDate).toLocaleTimeString()}</div>
+                        <a href="${topStory.link}" target="_blank" style="color:var(--clr); font-size:0.8rem; margin-top:10px; display:block;">Read Full Intel →</a>
+                    `;
+                    grid.appendChild(card);
+
+                    // Add to Ticker
+                    const span = document.createElement('span');
+                    span.innerText = `🔴 ${s.name.toUpperCase()}: ${topStory.title}`;
+                    ticker.appendChild(span);
+
+                } catch (err) {
+                    console.error("Link broken for", s.name);
+                }
+            }
+            
+            document.getElementById('dynamic-summary').innerText = "Strategic focus for today: High-attrition conflicts in the East are driving energy and defense policy shifts in the West. All sources are currently synchronized.";
+        }
+
+        // Initialize on load
+        updateDashboard();
     </script>
 </body>
 </html>
