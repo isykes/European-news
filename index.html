@@ -3,597 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Europe Briefing — 19 March 2026</title>
+<title>Europe Briefing &mdash; Friday 20 March 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg:        #0b0f1a;
-  --surface:   #111827;
-  --border:    rgba(255,255,255,0.08);
-  --text:      #e8eaf0;
-  --muted:     #8890a4;
-  --c1: #f97316;  /* War / Conflict  — amber-orange */
-  --c2: #38bdf8;  /* Europe / EU     — sky blue      */
-  --c3: #a78bfa;  /* Diplomacy       — violet        */
-  --c4: #34d399;  /* Economy / Trade — emerald       */
-  --c5: #f472b6;  /* Society / Health— pink          */
-  --c6: #facc15;  /* UK Perspective  — yellow        */
+  --bg:#0b0f1a; --surface:#111827; --border:rgba(255,255,255,0.08);
+  --text:#e8eaf0; --muted:#8890a4;
+  --c1:#f97316; --c2:#38bdf8; --c3:#a78bfa; --c4:#34d399; --c5:#f472b6; --c6:#facc15; --c7:#fb923c;
 }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ── NOISE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── HERO ── */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 4rem 6vw;
-  overflow: hidden;
-}
-
-.hero-bg-blobs {
-  position: absolute; inset: 0; z-index: 0;
-  pointer-events: none;
-}
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.18;
-}
-.blob-1 { width: 55vw; height: 55vw; top: -15vw; left: -10vw; background: var(--c1); animation: drift1 14s ease-in-out infinite alternate; }
-.blob-2 { width: 40vw; height: 40vw; top: 20vw; right: -8vw;  background: var(--c2); animation: drift2 18s ease-in-out infinite alternate; }
-.blob-3 { width: 35vw; height: 35vw; bottom: -5vw; left: 30vw; background: var(--c3); animation: drift3 22s ease-in-out infinite alternate; }
-
-@keyframes drift1 { to { transform: translate(5vw, 8vw) scale(1.08); } }
-@keyframes drift2 { to { transform: translate(-6vw, 5vw) scale(0.95); } }
-@keyframes drift3 { to { transform: translate(4vw, -7vw) scale(1.1); } }
-
-.hero-inner { position: relative; z-index: 1; max-width: 860px; }
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.8rem;
-  opacity: 0;
-  animation: slideUp 0.7s 0.1s ease forwards;
-}
-.eyebrow-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--c1);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.6); opacity: 0.6; }
-}
-
-.hero h1 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(3.2rem, 8vw, 7.5rem);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.6rem;
-  opacity: 0;
-  animation: slideUp 0.8s 0.25s ease forwards;
-}
-.hero h1 em {
-  font-style: italic;
-  font-weight: 300;
-  background: linear-gradient(135deg, var(--c1) 0%, var(--c3) 50%, var(--c2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-lead {
-  font-size: clamp(1rem, 2vw, 1.22rem);
-  color: var(--muted);
-  max-width: 600px;
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: slideUp 0.8s 0.4s ease forwards;
-}
-
-.source-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  opacity: 0;
-  animation: slideUp 0.8s 0.55s ease forwards;
-}
-.pill {
-  display: inline-block;
-  padding: 0.3rem 0.9rem;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  background: rgba(255,255,255,0.04);
-  color: var(--muted);
-  transition: all 0.25s;
-}
-.pill:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
-a.pill { text-decoration: none; cursor: pointer; }
-
-a.src-tag {
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
-  display: inline-block;
-}
-a.src-tag:hover { opacity: 0.75; transform: translateY(-1px); }
-
-footer a {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-footer a:hover { color: var(--text); }
-
-.scroll-cue {
-  position: absolute;
-  bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-  opacity: 0;
-  animation: slideUp 0.8s 1s ease forwards;
-}
-.scroll-cue span { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-.scroll-arrow { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--muted), transparent); animation: scrollBob 2s ease-in-out infinite; }
-@keyframes scrollBob { 0%,100% { transform: scaleY(1); opacity: 0.5; } 50% { transform: scaleY(1.3); opacity: 1; } }
-
-/* ── SUMMARY SECTION ── */
-.summary-section {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 5rem 4vw 3rem;
-}
-
-.section-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-
-.summary-intro {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--text);
-  max-width: 820px;
-  margin-bottom: 3rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ── THEME BLOCKS ── */
-.themes { display: flex; flex-direction: column; gap: 2px; margin-bottom: 4rem; }
-
-.theme-block {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 200px;
-  border-radius: 4px;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.theme-block.visible { opacity: 1; transform: translateY(0); }
-
-.theme-block:hover .theme-label-col { filter: brightness(1.1); }
-
-.theme-label-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1.8rem;
-  transition: filter 0.3s;
-}
-.theme-label-col h2 {
-  font-family: 'Fraunces', serif;
-  font-size: 1.6rem;
-  font-weight: 900;
-  line-height: 1.1;
-  color: rgba(0,0,0,0.85);
-  margin-bottom: 0.4rem;
-}
-.theme-label-col .theme-count {
-  font-size: 0.62rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.5);
-}
-
-.theme-content-col {
-  background: var(--surface);
-  padding: 2rem 2.2rem;
-  border: 1px solid var(--border);
-  border-left: none;
-}
-.theme-content-col p {
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: #c4cad8;
-  margin-bottom: 1.2rem;
-}
-.theme-content-col p:last-of-type { margin-bottom: 1.4rem; }
-
-.source-refs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: auto;
-}
-.src-tag {
-  font-size: 0.58rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.6rem;
-  border-radius: 3px;
-  font-weight: 500;
-}
-
-/* Theme colour mappings */
-.t-war   .theme-label-col { background: var(--c1); }
-.t-eu    .theme-label-col { background: var(--c2); }
-.t-dipl  .theme-label-col { background: var(--c3); }
-.t-econ  .theme-label-col { background: var(--c4); }
-.t-soc   .theme-label-col { background: var(--c5); }
-
-.t-war  .src-tag { background: rgba(249,115,22,0.15);  color: var(--c1); }
-.t-eu   .src-tag { background: rgba(56,189,248,0.15);  color: var(--c2); }
-.t-dipl .src-tag { background: rgba(167,139,250,0.15); color: var(--c3); }
-.t-econ .src-tag { background: rgba(52,211,153,0.15);  color: var(--c4); }
-.t-soc  .src-tag { background: rgba(244,114,182,0.15); color: var(--c5); }
-.t-uk   .theme-label-col { background: var(--c6); }
-.t-uk   .src-tag { background: rgba(250,204,21,0.15);  color: var(--c6); }
-
-/* ── KEY NUMBERS ── */
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 2px;
-  margin-bottom: 4rem;
-}
-.stat-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.stat-box.visible { opacity: 1; transform: translateY(0); }
-.stat-box:hover { background: rgba(255,255,255,0.04); }
-.stat-num {
-  font-family: 'Fraunces', serif;
-  font-size: 2.8rem;
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 0.4rem;
-}
-.stat-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ── CLOSING ANALYSIS ── */
-.analysis-box {
-  background: linear-gradient(135deg, rgba(249,115,22,0.06) 0%, rgba(56,189,248,0.06) 50%, rgba(167,139,250,0.06) 100%);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  padding: 3rem 3.5rem;
-  margin-bottom: 4rem;
-  position: relative;
-  overflow: hidden;
-}
-.analysis-box::before {
-  content: '"';
-  font-family: 'Fraunces', serif;
-  font-size: 18rem;
-  font-weight: 900;
-  line-height: 1;
-  color: rgba(255,255,255,0.02);
-  position: absolute;
-  top: -2rem; left: 1rem;
-  pointer-events: none;
-}
-.analysis-box h3 {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.2rem;
-  color: var(--text);
-}
-.analysis-box p {
-  font-size: 1rem;
-  line-height: 1.85;
-  color: #b0b8cc;
-  position: relative;
-}
-.analysis-box p + p { margin-top: 1rem; }
-
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 2rem 4vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-/* ── UTILS ── */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 680px) {
-  .theme-block { grid-template-columns: 1fr; }
-  .theme-label-col { min-height: 90px; justify-content: flex-start; }
-  .hero { padding: 3rem 5vw; }
-  .analysis-box { padding: 2rem 1.5rem; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden; }
+.hero { position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 6vw;overflow:hidden; }
+.hero-bg-blobs { position:absolute;inset:0;z-index:0;pointer-events:none; }
+.blob { position:absolute;border-radius:50%;filter:blur(120px);opacity:0.15; }
+.blob-1{width:55vw;height:55vw;top:-15vw;left:-10vw;background:var(--c1);animation:drift1 14s ease-in-out infinite alternate;}
+.blob-2{width:40vw;height:40vw;top:20vw;right:-8vw;background:var(--c2);animation:drift2 18s ease-in-out infinite alternate;}
+.blob-3{width:35vw;height:35vw;bottom:-5vw;left:30vw;background:var(--c3);animation:drift3 22s ease-in-out infinite alternate;}
+@keyframes drift1{to{transform:translate(5vw,8vw) scale(1.08);}}
+@keyframes drift2{to{transform:translate(-6vw,5vw) scale(0.95);}}
+@keyframes drift3{to{transform:translate(4vw,-7vw) scale(1.1);}}
+.hero-inner { position:relative;z-index:1;max-width:860px; }
+.eyebrow { display:inline-flex;align-items:center;gap:0.6rem;font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.8rem;opacity:0;animation:slideUp 0.7s 0.1s ease forwards; }
+.eyebrow-dot { width:7px;height:7px;border-radius:50%;background:var(--c4);animation:pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.7);opacity:0.5;}}
+.hero h1 { font-family:'Fraunces',serif;font-size:clamp(3.2rem,8vw,7.5rem);font-weight:900;line-height:0.95;letter-spacing:-0.03em;margin-bottom:1.6rem;opacity:0;animation:slideUp 0.8s 0.25s ease forwards; }
+.hero h1 em { font-style:italic;font-weight:300;background:linear-gradient(135deg,var(--c1) 0%,var(--c3) 50%,var(--c2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+.hero-lead { font-size:clamp(1rem,2vw,1.18rem);color:var(--muted);max-width:580px;line-height:1.7;margin-bottom:2.5rem;opacity:0;animation:slideUp 0.8s 0.4s ease forwards; }
+.source-pills { display:flex;flex-wrap:wrap;gap:0.5rem;opacity:0;animation:slideUp 0.8s 0.55s ease forwards; }
+.pill { display:inline-block;padding:0.3rem 0.9rem;border-radius:100px;border:1px solid var(--border);font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.04);color:var(--muted);transition:all 0.25s;text-decoration:none; }
+.pill:hover { border-color:rgba(255,255,255,0.3);color:var(--text); }
+.scroll-cue { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:slideUp 0.8s 1s ease forwards; }
+.scroll-cue span { font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted); }
+.scroll-arrow { width:1px;height:40px;background:linear-gradient(to bottom,var(--muted),transparent);animation:scrollBob 2s ease-in-out infinite; }
+@keyframes scrollBob{0%,100%{opacity:0.4;}50%{opacity:1;}}
+.main-wrap { max-width:1200px;margin:0 auto;padding:3rem 4vw 4rem; }
+.status-bar { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;padding:0.75rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:2.5rem; }
+.status-left { font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:0.6rem; }
+.live-dot { width:6px;height:6px;border-radius:50%;background:var(--c4);animation:pulse-dot 2s ease-in-out infinite; }
+.status-left strong { color:var(--c4); }
+.source-section { margin-bottom:3rem;opacity:0;transform:translateY(20px);animation:slideUp 0.5s ease forwards; }
+.source-header { display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border); }
+.source-colour-bar { width:4px;height:2rem;border-radius:2px;flex-shrink:0; }
+.source-name { font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700; }
+.source-meta { font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted); }
+.source-link { font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-left:auto;transition:color 0.2s; }
+.source-link:hover { color:var(--text); }
+.articles-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1px;background:var(--border); }
+.article-card { background:var(--surface);padding:1.3rem 1.5rem;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:0.45rem;transition:background 0.2s;position:relative;overflow:hidden; }
+.article-card::before { content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--src-color,#888);opacity:0.6;transition:opacity 0.2s; }
+.article-card:hover { background:#16213a; }
+.article-card:hover::before { opacity:1; }
+.article-date { font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted); }
+.article-title { font-family:'Fraunces',serif;font-size:1rem;font-weight:700;line-height:1.3;color:var(--text); }
+.article-desc { font-size:0.79rem;color:var(--muted);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden; }
+.article-footer { font-size:0.65rem;color:var(--muted);margin-top:auto;padding-top:0.6rem; }
+.feed-error { padding:1rem 0;font-size:0.82rem;color:var(--muted); }
+.feed-error a { color:var(--c2); }
+footer { border-top:1px solid var(--border);padding:1.8rem 4vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted); }
+footer a { color:var(--muted);text-decoration:none; }
+footer a:hover { color:var(--text); }
+@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:600px){
+  .articles-grid{grid-template-columns:1fr;}
+  .hero{padding:3rem 5vw;}
+  .source-header{flex-wrap:wrap;}
+  .source-link{margin-left:0;}
 }
 </style>
 </head>
 <body>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
+  <div class="hero-bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
   <div class="hero-inner">
-    <div class="eyebrow">
-      <span class="eyebrow-dot"></span>
-      Thursday 19 March 2026 &nbsp;·&nbsp; Seven-source synthesis
-    </div>
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Friday 20 March 2026 &nbsp;&middot;&nbsp; Daily Edition</div>
     <h1>Europe<br><em>Briefing</em></h1>
-    <p class="hero-lead">A unified digest of today's most significant stories, drawn from seven leading European and British news outlets — analysed, contextualised, and presented in one place.</p>
-    <div class="source-pills">
-      <a class="pill" href="https://www.euronews.com" target="_blank" rel="noopener">Euronews ↗</a>
-      <a class="pill" href="https://www.dw.com/en/" target="_blank" rel="noopener">Deutsche Welle ↗</a>
-      <a class="pill" href="https://www.france24.com/en/" target="_blank" rel="noopener">France 24 ↗</a>
-      <a class="pill" href="https://www.swissinfo.ch/eng" target="_blank" rel="noopener">SwissInfo ↗</a>
-      <a class="pill" href="https://euobserver.com" target="_blank" rel="noopener">EUobserver ↗</a>
-      <a class="pill" href="https://www.bbc.com/news" target="_blank" rel="noopener">BBC News ↗</a>
-      <a class="pill" href="https://www.theguardian.com" target="_blank" rel="noopener">The Guardian ↗</a>
-    </div>
+    <p class="hero-lead">Daily headlines from seven leading European and British news outlets, automatically refreshed every morning.</p>
+    <div class="source-pills"><a class="pill" href="https://www.euronews.com" target="_blank">Euronews</a><a class="pill" href="https://www.dw.com/en/" target="_blank">Deutsche Welle</a><a class="pill" href="https://www.france24.com/en/" target="_blank">France 24</a><a class="pill" href="https://www.swissinfo.ch/eng" target="_blank">SwissInfo</a><a class="pill" href="https://euobserver.com" target="_blank">EUobserver</a><a class="pill" href="https://www.bbc.com/news" target="_blank">BBC News</a><a class="pill" href="https://www.theguardian.com" target="_blank">The Guardian</a></div>
   </div>
-  <div class="scroll-cue">
-    <span>Scroll</span>
-    <div class="scroll-arrow"></div>
-  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="scroll-arrow"></div></div>
 </section>
-
-<!-- MAIN CONTENT -->
-<main class="summary-section">
-  <div class="section-label">Today's Briefing</div>
-  <p class="summary-intro">Seven major themes dominate European and British news on 19 March 2026: an expanding Middle East war reshaping global alliances, a fractious EU summit in Brussels, diplomatic reordering among world powers, economic turbulence from Hormuz to Zurich, pressing social and scientific stories at home — and a distinctive UK perspective on how Britain is navigating the crisis.</p>
-
-  <!-- THEME BLOCKS -->
-  <div class="themes">
-
-    <!-- WAR -->
-    <div class="theme-block t-war">
-      <div class="theme-label-col">
-        <h2>War &amp; Conflict</h2>
-        <span class="theme-count">5 stories · all outlets</span>
-      </div>
-      <div class="theme-content-col">
-        <p>The US-Israeli military campaign against Iran — now in its 20th day — is the single story dominating every front page. Following Israeli airstrikes that killed IRGC Basij chief Gholam Reza Soleimani and senior security official Ali Larijani, Tehran launched multi-warhead missile barrages at central Israel and struck near a US military base in the UAE, drawing Gulf neighbours Saudi Arabia, Kuwait and the UAE into interception operations. France 24 correspondents report Israeli forces have pushed into Beirut, demolishing a residential high-rise and displacing over one million Lebanese. All five outlets agree the conflict is fast widening beyond its original theatre.</p>
-        <p>On the Ukraine front, the war of attrition continues into its fourth year. Kyiv has accepted a fact-finding mission on damage to the Druzhba oil pipeline — a concession aimed at unlocking Hungary's veto on a €90 billion EU support loan. The pipeline runs through Hungary to Central Europe and its interruption has given Budapest rare diplomatic leverage over the bloc.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://www.euronews.com/tag/iran-war" target="_blank" rel="noopener">Euronews ↗</a>
-          <a class="src-tag" href="https://www.dw.com/en/iran/t-15723" target="_blank" rel="noopener">DW ↗</a>
-          <a class="src-tag" href="https://www.france24.com/en/middle-east/" target="_blank" rel="noopener">France 24 ↗</a>
-          <a class="src-tag" href="https://euobserver.com/topic/ukraine/" target="_blank" rel="noopener">EUobserver ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- EU -->
-    <div class="theme-block t-eu">
-      <div class="theme-label-col">
-        <h2>European Union</h2>
-        <span class="theme-count">6 stories · 4 outlets</span>
-      </div>
-      <div class="theme-content-col">
-        <p>The EU summit in Brussels — planned as a landmark debate on European competitiveness — has been hijacked by two explosive rows. First, Hungary's ongoing veto on a €90 billion Ukraine loan continues to paralyse bloc-wide support for Kyiv. Second, a blocking minority of member states led by Italy and Poland is pushing to weaken the EU's Emissions Trading System (carbon pricing), threatening to unravel one of Europe's most significant climate tools. Both disputes are crowding out the summit's original ambitions, to the frustration of the Commission.</p>
-        <p>In parallel, the Commission unveiled its "28th regime" proposal — an optional EU-wide business code intended to let companies operate under a single ruleset rather than 27 national legal systems. Cyprus invoked Article 42.7 of the EU treaty (the mutual assistance clause) following the Iran conflict's spillover, prompting France and other allies to deploy warships to protect the island — a historic precedent for EU collective defence outside NATO.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://euobserver.com/section/eu-politics/" target="_blank" rel="noopener">EUobserver ↗</a>
-          <a class="src-tag" href="https://www.france24.com/en/europe/" target="_blank" rel="noopener">France 24 ↗</a>
-          <a class="src-tag" href="https://www.euronews.com/my-europe" target="_blank" rel="noopener">Euronews ↗</a>
-          <a class="src-tag" href="https://www.dw.com/en/europe/s-1433" target="_blank" rel="noopener">DW ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- DIPLOMACY -->
-    <div class="theme-block t-dipl">
-      <div class="theme-label-col">
-        <h2>Diplomacy &amp; Alliances</h2>
-        <span class="theme-count">4 stories · 3 outlets</span>
-      </div>
-      <div class="theme-content-col">
-        <p>A far-reaching diplomatic realignment is under way. German Chancellor Friedrich Merz travelled to China on his first official visit since taking office, seeking new global trading partners to replace the vacuum left by the Trump administration's retreat from traditional alliances. Berlin is also navigating a hard refusal by Germany, the UK and other EU states to send warships to the Strait of Hormuz, despite intense White House pressure — a rupture that is exposing deep cracks in transatlantic relations.</p>
-        <p>France is charting its own course: President Macron's announcement of expanded French nuclear warheads and potential sharing with European allies signals Paris's intent to position itself as the continent's security guarantor. Poland's Prime Minister Tusk is searching for a "Plan B" on defence spending after the Polish president vetoed the landmark Safe Loans bill. Meanwhile, a DW journalist arrested in Turkey highlights the continuing pressure on press freedom inside a NATO member state.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://www.dw.com/en/foreign-policy/s-9107" target="_blank" rel="noopener">DW ↗</a>
-          <a class="src-tag" href="https://www.france24.com/en/france/" target="_blank" rel="noopener">France 24 ↗</a>
-          <a class="src-tag" href="https://euobserver.com/section/eu-and-the-world/" target="_blank" rel="noopener">EUobserver ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ECONOMY -->
-    <div class="theme-block t-econ">
-      <div class="theme-label-col">
-        <h2>Economy &amp; Trade</h2>
-        <span class="theme-count">3 stories · 3 outlets</span>
-      </div>
-      <div class="theme-content-col">
-        <p>The economic fallout from the Hormuz conflict is spreading fast. Switzerland has downgraded its 2026 growth forecast, citing spiking energy prices and disrupted global supply chains. Swiss officials stressed that domestic energy reserves remain sufficient, but acknowledged that a prolonged closure of the strait — through which roughly 20% of the world's seaborne oil passes — would test that resilience. The EU's carbon market debate at the summit adds another layer of economic uncertainty, with industrial lobbies arguing that high carbon costs make European manufacturers uncompetitive against cheaper imports.</p>
-        <p>The Commission's "28th regime" business code proposal is being framed partly as an economic stimulus measure, intended to reduce red tape for companies operating across multiple EU member states. Germany's renewed push for a closer China trade relationship under Merz also reflects the urgency felt in Europe's largest economy to hedge against US tariff uncertainty and Middle East supply shocks.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://www.swissinfo.ch/eng/business/" target="_blank" rel="noopener">SwissInfo ↗</a>
-          <a class="src-tag" href="https://euobserver.com/section/economy/" target="_blank" rel="noopener">EUobserver ↗</a>
-          <a class="src-tag" href="https://www.dw.com/en/business/s-1431" target="_blank" rel="noopener">DW ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- SOCIETY -->
-    <div class="theme-block t-soc">
-      <div class="theme-label-col">
-        <h2>Society, Science &amp; Home</h2>
-        <span class="theme-count">5 stories · 3 outlets</span>
-      </div>
-      <div class="theme-content-col">
-        <p>Away from the geopolitical drama, several stories reflect profound change at home. CERN scientists announced the detection of a new exotic particle — four times heavier than a proton and composed of two charm quarks and a down quark — opening new avenues in particle physics. Separately, dengue virus was detected in tiger mosquitoes north of the Alps in Basel for the first time, a milestone linked to northward species migration driven by rising temperatures.</p>
-        <p>In the Netherlands, a targeted explosion damaged a Jewish school in Amsterdam overnight with no casualties, raising security concerns. In Switzerland, parliament backed a CHF 50 emergency hospital co-payment in an effort to reduce pressure on emergency departments. And in Germany, a growing nepotism scandal within the AfD is fuelling questions about the far-right party's internal culture ahead of a period of heightened political scrutiny.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://www.swissinfo.ch/eng/science/" target="_blank" rel="noopener">SwissInfo ↗</a>
-          <a class="src-tag" href="https://www.euronews.com/news/europe/netherlands" target="_blank" rel="noopener">Euronews ↗</a>
-          <a class="src-tag" href="https://www.dw.com/en/germany/s-1432" target="_blank" rel="noopener">DW ↗</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- UK PERSPECTIVE -->
-    <div class="theme-block t-uk">
-      <div class="theme-label-col">
-        <h2>UK Perspective</h2>
-        <span class="theme-count">5 stories · BBC &amp; Guardian</span>
-      </div>
-      <div class="theme-content-col">
-        <p>Britain is carving out a cautious, distinctly independent line on the Iran conflict. Prime Minister Keir Starmer has firmly ruled out sending Royal Navy warships to the Strait of Hormuz despite intense US pressure, calling it a "difficult decision" but stressing that the UK will not be drawn into wider military action. Instead, ministers are reportedly considering deploying minesweeping drones — a lower-profile intervention designed to keep oil routes open without committing combat vessels. The Guardian reports that UK intelligence sources say Geneva talks had actually brought a new Iran nuclear deal tantalizingly close, with tougher inspections and phased sanctions relief under discussion, before the current crisis derailed negotiations.</p>
-        <p>The BBC's flagship Newshour programme has provided extensive coverage of the humanitarian ripple effects: the US is ending health programmes in Zimbabwe, including HIV treatment for 1.2 million people, as part of Trump's rollback of USAID — a story with deep resonance in the UK given its own aid commitments. Domestically, the BBC reports that UK oil prices have surged past $100 a barrel as the Hormuz crisis deepens, putting fresh pressure on an already strained British economy. The Guardian is leading on the Starmer government's internal tensions over defence spending, with backbenchers pushing for a faster uplift to 2.5% of GDP in light of the shifting security landscape.</p>
-        <div class="source-refs">
-          <a class="src-tag" href="https://www.bbc.com/news" target="_blank" rel="noopener">BBC News ↗</a>
-          <a class="src-tag" href="https://www.theguardian.com/uk" target="_blank" rel="noopener">The Guardian ↗</a>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /themes -->
-
-  <!-- KEY NUMBERS -->
-  <div class="section-label">At a Glance</div>
-  <div class="stats-row">
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c1)">20</div>
-      <div class="stat-label">Days of Iran War</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c2)">€90bn</div>
-      <div class="stat-label">Ukraine loan blocked</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c3)">27+1</div>
-      <div class="stat-label">EU "28th regime"</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c4)">CHF 50</div>
-      <div class="stat-label">Swiss hospital fee</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c5)">1M+</div>
-      <div class="stat-label">Lebanese displaced</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num" style="color:var(--c1)">42.7</div>
-      <div class="stat-label">EU treaty article invoked</div>
-    </div>
+<div class="main-wrap">
+  <div class="status-bar">
+    <div class="status-left"><span class="live-dot"></span>Last updated <strong>07:16 UTC</strong></div>
   </div>
-
-  <!-- ANALYSIS -->
-  <div class="analysis-box">
-    <h3>Editorial Analysis</h3>
-    <p>Taken together, today's reporting from seven outlets tells a single story: the international order that defined Europe for 80 years is fracturing simultaneously along multiple fault lines. The US-Israeli campaign against Iran is not merely a Middle East conflict — it is a stress test of NATO cohesion, a trigger for energy-price shocks, a catalyst for EU defence unity and a driver of German diplomatic hedging toward China. Every headline in today's digest connects back to this central rupture.</p>
-    <p>Europe's response is fragmented but not paralysed. France is asserting nuclear leadership, the EU is invoking mutual-defence clauses it has never used in earnest, and smaller states like Switzerland are quietly stress-testing their supply chains. Britain, as both BBC and The Guardian make clear, is threading a particularly delicate needle — refusing Washington's military demands while deploying technical assets to protect its energy interests, and wrestling with how fast to rebuild defence spending. The EU summit may be consumed by Hungary's veto and the carbon market row, but beneath those political skirmishes lies a genuine, urgent attempt to build a more self-reliant Europe — and Britain, post-Brexit, is finding itself drawn back into that conversation whether it intended to be or not.</p>
-  </div>
-
-</main>
-
+<div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#38bdf8"></div><span class="source-name">Euronews</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://www.euronews.com" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="http://www.euronews.com/video/2026/03/20/latest-news-bulletin-march-20th-2026-morning" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="article-date">Fri, 20 Mar 2026 07:00:33</div><div class="article-title">Latest news bulletin | March 20th, 2026 – Morning</div><div class="article-desc">Catch up with the most important stories from around Europe and beyond this March 20th, 2026 - latest news, breaking news, World, Business, Entertainment, Politics, Culture, Travel.</div><div class="article-footer">Read on Euronews &rarr;</div></a><a class="article-card" href="http://www.euronews.com/2026/03/20/europes-fertiliser-crisis-prices-surge-due-to-iran-war-and-dependence-on-russia" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="article-date">Fri, 20 Mar 2026 06:30:04</div><div class="article-title">Europe's fertilizer crisis: prices surge due to Iran war and dependence on Russia</div><div class="article-desc">The fertilizer market is facing a double crisis: the Iran war is driving up prices, the Strait of Hormuz is blocked - and at the same time it is becoming clear how dependent Europe still is on Russian supplies.</div><div class="article-footer">Read on Euronews &rarr;</div></a><a class="article-card" href="http://www.euronews.com/2026/03/20/israel-and-iran-exchange-strikes-on-persian-new-year-as-war-jolts-energy-markets" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="article-date">Fri, 20 Mar 2026 06:22:53</div><div class="article-title">Israel and Iran exchange strikes on Persian New Year as war jolts energy markets</div><div class="article-desc">Activists reported hearing strikes around Iran’s capital, Tehran, just as blasts were heard in East Jerusalem with sirens and booms sounding across the city.</div><div class="article-footer">Read on Euronews &rarr;</div></a><a class="article-card" href="http://www.euronews.com/2026/03/19/qatar-pm-after-gulf-energy-attacks-this-war-must-be-stopped-immediately" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="article-date">Thu, 19 Mar 2026 23:04:41</div><div class="article-title">Qatar PM after Gulf energy attacks: 'This war must be stopped immediately'</div><div class="article-desc">Qatar’s prime minister has called for an immediate end to the conflict after missile strikes hit energy facilities across the Gulf, including the country’s key Ras Laffan hub. Doha is demanding Iran halt the attacks, as gas prices surge and international pressure grows for de-escalation.</div><div class="article-footer">Read on Euronews &rarr;</div></a><a class="article-card" href="http://www.euronews.com/video/2026/03/19/iranian-tv-shows-man-rescued-from-south-khorasan-rubble" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="article-date">Thu, 19 Mar 2026 22:52:16</div><div class="article-title">Iranian TV shows man rescued from South Khorasan rubble</div><div class="article-desc">Red Crescent teams rescue survivors in South Khorasan after reported US-Israeli strikes, as Iran counts rising civilian toll and mounting destruction.</div><div class="article-footer">Read on Euronews &rarr;</div></a></div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#f97316"></div><span class="source-name">Deutsche Welle</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://www.dw.com/en/" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="https://www.dw.com/en/drone-defense-in-the-iran-war-what-can-ukraine-offer/a-76410396?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="article-date">Fri, 20 Mar 2026 06:40:00</div><div class="article-title">Drone defense in the Iran war: What can Ukraine offer?</div><div class="article-desc">As the Iran war continues apace, Ukraine's hard-won expertise in countering drone swarms is sparking interest around the world.</div><div class="article-footer">Read on Deutsche Welle &rarr;</div></a><a class="article-card" href="https://www.dw.com/en/k-pop-stars-bts-release-new-album-ahead-of-comeback-concert/a-76443367?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="article-date">Fri, 20 Mar 2026 05:57:00</div><div class="article-title">K-Pop stars BTS release new album ahead of comeback concert</div><div class="article-desc">The BTS comeback concert, to be held at Seoul's historic Gwanghwamun Square, is expected to draw around 260,000 people. The event will be livestreamed by Netflix in around 190 countries.</div><div class="article-footer">Read on Deutsche Welle &rarr;</div></a><a class="article-card" href="https://www.dw.com/en/us-trump-image-approved-for-commemorative-gold-coin/a-76443197?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="article-date">Fri, 20 Mar 2026 03:51:00</div><div class="article-title">US: Trump image approved for commemorative gold coin</div><div class="article-desc">An arts panel appointed by Donald Trump backed plans for a 24-karat commemorative coin featuring the US president, drawing criticism from Democrats.</div><div class="article-footer">Read on Deutsche Welle &rarr;</div></a><a class="article-card" href="https://www.dw.com/en/iran-war-israel-striking-infrastructure-across-tehran/live-76442983?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="article-date">Fri, 20 Mar 2026 02:32:00</div><div class="article-title">Iran war: Israel striking 'infrastructure' across Tehran</div><div class="article-desc">Israel and Iran continued to exchange missile strikes overnight. However, Israel said it would refrain from further attacks on the key South Pars gas field. DW has more.</div><div class="article-footer">Read on Deutsche Welle &rarr;</div></a><a class="article-card" href="https://www.dw.com/en/belarus-releases-250-political-prisoners-as-part-of-us-deal/a-76442237?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="article-date">Thu, 19 Mar 2026 21:42:00</div><div class="article-title">Belarus releases 250 political prisoners as part of US deal</div><div class="article-desc">Belarus freed 250 political prisoners in its largest release yet — a move celebrated as a humanitarian breakthrough and tied to the easing of US sanctions. However, many remain behind bars.</div><div class="article-footer">Read on Deutsche Welle &rarr;</div></a></div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#a78bfa"></div><span class="source-name">France 24</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://www.france24.com/en/" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="https://www.france24.com/en/tv-shows/sports/20260320-lyon-crash-out-of-europa-league" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="article-date">Fri, 20 Mar 2026 06:48:57</div><div class="article-title">Lyon crash out of Europa League</div><div class="article-desc">Lyon have been eliminated from the Europa League following its 2-0 home loss to Celta Vigo in the second leg of the round of 16 (1-1 in the first leg). Lyon were hampered by Moussa Niakhaté’s red card in the 19th minute. Rueda opened the scoring just after the hour mark, before Jutglà sealed the Spanish side’s qualification in additional time. After seven consecutive matches without a win, Lyon now turn their focus to Ligue 1.</div><div class="article-footer">Read on France 24 &rarr;</div></a><a class="article-card" href="https://www.france24.com/en/middle-east/20260320-middle-east-war-live-israel-strikes-tehran-persian-new-year-energy-markets" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="article-date">Fri, 20 Mar 2026 03:18:04</div><div class="article-title">Middle East war live: Iran drone sparks fires at Kuwait refinery as Israel strikes Tehran on Nowruz</div><div class="article-desc">An Iranian drone attack hit Kuwait’s Mina al-Ahmadi oil refinery on Friday, causing several fires but no casualties, state media said, adding that the attack had “shut down” some refinery units. The attack came as Israel pounded Tehran with air strikes as Iranians marked Nowruz amid a war that has sent shock waves through the global economy. Follow our liveblog for the latest updates.</div><div class="article-footer">Read on France 24 &rarr;</div></a><a class="article-card" href="https://www.france24.com/en/americas/20260320-venezuela-interim-president-military-commanders-reforms" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="article-date">Fri, 20 Mar 2026 03:10:45</div><div class="article-title">Venezuela interim president replaces top military commanders in sweeping reforms</div><div class="article-desc">Venezuela’s interim President Delcy Rodriguez said on Thursday she had replaced all senior military commanders, expanding sweeping reforms after the US ousted Nicolas Maduro. The move follows the dismissal of a long-serving defence minister and the appointment of a former intelligence chief, as Caracas reshapes its armed forces.</div><div class="article-footer">Read on France 24 &rarr;</div></a><a class="article-card" href="https://www.france24.com/en/culture/20260320-k-pop-megastars-bts-drop-new-album-ahead-of-comeback-mega-concert" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="article-date">Fri, 20 Mar 2026 00:05:24</div><div class="article-title">K-pop megastars BTS drop new album ahead of comeback mega-concert</div><div class="article-desc">After an almost four-year hiatus, K-pop icons BTS dropped a new album Friday ahead of an open-air concert in Seoul expected to draw more than a quarter of a million fans from around the world.</div><div class="article-footer">Read on France 24 &rarr;</div></a><a class="article-card" href="https://www.france24.com/en/tv-shows/a-propos/20260319-us-reportedly-weighing-military-reinforcements-as-iran-war-enters-possible-new-phase" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="article-date">Thu, 19 Mar 2026 22:30:26</div><div class="article-title">US reportedly weighing military reinforcements as Iran war enters possible new phase</div><div class="article-desc">President Donald Trump's administration is considering deploying thousands of U.S. troops to reinforce its operation in the Middle East, as the U.S. military prepares for ​possible next steps in its campaign against Iran, Reuters reports quoting a U.S. official and three people familiar with the matter. FRANCE 24's Sharon Gaffney speaks with Michael O’Hanlon, Director of Research in the Foreign Policy Programme at the Brookings Institution</div><div class="article-footer">Read on France 24 &rarr;</div></a></div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#f472b6"></div><span class="source-name">SwissInfo</span><span class="source-meta">0 headlines</span><a class="source-link" href="https://www.swissinfo.ch/eng" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="feed-error">Feed unavailable &mdash; <a href="https://www.swissinfo.ch/eng" target="_blank">visit SwissInfo directly</a>.</div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#34d399"></div><span class="source-name">EUobserver</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://euobserver.com" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="https://euobserver.com/207729/eu-financial-guarantee-for-kyiv-not-working-zelensky-says/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="article-date">Thu, 19 Mar 2026 18:35:15</div><div class="article-title">EU leaders enraged as summit ends with Orbán vetoing €90bn Ukraine aid</div><div class="article-desc">EU leaders failed to convince Hungary to lift its veto on Ukraine support, as president Volodomyr Zelensky lamented the blockage.</div><div class="article-footer">Read on EUobserver &rarr;</div></a><a class="article-card" href="https://euobserver.com/207701/macron-seeks-ramadan-ceasefire-as-eu-leaders-say-no-to-trump-on-iran/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="article-date">Thu, 19 Mar 2026 17:53:02</div><div class="article-title">Macron seeks Ramadan ceasefire, as EU leaders say no to Trump on Iran</div><div class="article-desc">"As the [Middle East] region enters a period of religious holidays, I think everyone should calm down and the fighting should stop," said French president Macron in Brussels.</div><div class="article-footer">Read on EUobserver &rarr;</div></a><a class="article-card" href="https://euobserver.com/207696/spains-sanchez-attacks-other-eu-leaders-for-exploiting-energy-prices-to-gut-climate-policies/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="article-date">Thu, 19 Mar 2026 17:15:22</div><div class="article-title">Spain’s Sánchez attacks other EU leaders for exploiting energy prices to gut climate policies</div><div class="article-desc">“Unfortunately, some governments are using this crisis and the rise in electricity prices to undermine climate policies,” Spain's socialist prime minister Pedro Sanchéz said on arrival at an EU leaders summit in Brussels.</div><div class="article-footer">Read on EUobserver &rarr;</div></a><a class="article-card" href="https://euobserver.com/207650/24-days-to-election-three-ukrainians-banned-from-hungary-as-threat-to-orbans-life/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="article-date">Thu, 19 Mar 2026 15:42:22</div><div class="article-title">24 days to election: Three Ukrainians banned from Hungary as ‘threat to Orbán’s life’</div><div class="article-desc">With just over three weeks to go, a literal 'false flag' operation at a Tisza rally, a potential JD Vance (but not Donald Trump) visit, some suspect candidates name-changing to confuse voters, and the latest opinion polling.</div><div class="article-footer">Read on EUobserver &rarr;</div></a><a class="article-card" href="https://euobserver.com/207622/ukrainian-birds-kill-record-900-russian-soldiers-after-fog-veiled-attack-ukraine-battlefield-update-day-1484/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="article-date">Thu, 19 Mar 2026 14:04:19</div><div class="article-title">Ukrainian ‘birds’ kill record 900 Russian soldiers, after fog-veiled attack (Ukraine Battlefield update, day 1,484):</div><div class="article-desc">"Just before zero hour [midnight], the first [Russian] assault groups ... moved off in the drizzle and ran straight into the drones," said a Ukrainian commander.</div><div class="article-footer">Read on EUobserver &rarr;</div></a></div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#facc15"></div><span class="source-name">BBC News</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://www.bbc.com/news" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="https://www.bbc.com/news/articles/c33ln4mp1p2o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="article-date">Thu, 19 Mar 2026 21:52:36</div><div class="article-title">Denmark planned to blow up Greenland runways if US invaded, reports say</div><div class="article-desc">Denmark's public broadcaster reports that the US operation to seize Venezuela's leader sparked fears it would act against Greenland.</div><div class="article-footer">Read on BBC News &rarr;</div></a><a class="article-card" href="https://www.bbc.com/news/articles/cy7166denxeo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="article-date">Thu, 19 Mar 2026 13:15:23</div><div class="article-title">Cyprus leader calls for frank discussion on 'colonial' UK bases</div><div class="article-desc">The UK's two military bases on Cyprus are a "colonial consequence" on the island, says President Nikos Christodoulides.</div><div class="article-footer">Read on BBC News &rarr;</div></a><a class="article-card" href="https://www.bbc.com/news/articles/cvge3mxgvwwo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="article-date">Thu, 19 Mar 2026 20:14:30</div><div class="article-title">Norway crown princess to address Epstein links as son's rape trial closes</div><div class="article-desc">Mette-Marit gives a much-anticipated interview, due to be broadcast on Friday.</div><div class="article-footer">Read on BBC News &rarr;</div></a><a class="article-card" href="https://www.bbc.com/news/articles/c24de9e97vno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="article-date">Thu, 19 Mar 2026 05:59:49</div><div class="article-title">How Europe sleepwalked into yet another energy crisis</div><div class="article-desc">It is not the first time that there has been deep energy-linked frustration in the heart of Europe.</div><div class="article-footer">Read on BBC News &rarr;</div></a><a class="article-card" href="https://www.bbc.com/news/articles/cly1mg3zy20o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="article-date">Thu, 19 Mar 2026 00:10:45</div><div class="article-title">How Finnish supermarkets are central to the country's defence</div><div class="article-desc">The chains all have detailed plans to follow in the event of the nation going to war.</div><div class="article-footer">Read on BBC News &rarr;</div></a></div></div><div class="source-section"><div class="source-header"><div class="source-colour-bar" style="background:#fb923c"></div><span class="source-name">The Guardian</span><span class="source-meta">5 headlines</span><a class="source-link" href="https://www.theguardian.com" target="_blank" rel="noopener">Visit site &uarr;</a></div><div class="articles-grid"><a class="article-card" href="https://www.theguardian.com/world/2026/mar/19/hungary-orban-ukraine-loan-veto-eu-summit-europe" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="article-date">Fri, 20 Mar 2026 00:07:21</div><div class="article-title">Viktor Orbán refuses to agree to €90bn loan for Ukraine as EU leaders accuse him of betrayal</div><div class="article-desc">German chancellor Friedrich Merz described Orbán’s U-turn on the loan Hungary had agreed to in December as ‘a gross act of disloyalty’EU leaders fumed after Hungary’s prime minister, Viktor Orbán, refused to drop his opposition to a vital €90bn (£78bn) loan for Ukraine, accusing him of betrayal and acting in bad faith.German chancellor Friedrich Merz described Orbán’s U-turn on the loan Hungary had agreed to in December as “a gross act of disloyalty” adding: “I am firmly convinced that it will leave deep marks.” Continue reading...</div><div class="article-footer">Read on The Guardian &rarr;</div></a><a class="article-card" href="https://www.theguardian.com/world/2026/mar/19/eu-leaders-vow-to-support-cyprus-in-frank-discussion-on-future-of-british-bases" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="article-date">Thu, 19 Mar 2026 22:58:55</div><div class="article-title">EU leaders vow to support Cyprus in talks over future of British bases</div><div class="article-desc">Akrotiri and Dhekelia bases have become targets for Iran after outbreak of Middle East crisisEU leaders have pledged to stand behind Cyprus as it seeks “an open and frank discussion” on the future of the British bases on the island, which have become a target after the outbreak of the latest Middle East crisis.Ahead of an EU summit on Thursday, Cyprus’s president, Nikos Christodoulides, said he wanted “an open and frank discussion with the British government” regarding the status and future of the British bases on the island. Continue reading...</div><div class="article-footer">Read on The Guardian &rarr;</div></a><a class="article-card" href="https://www.theguardian.com/world/2026/mar/19/illinois-student-dead-barcelona" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="article-date">Thu, 19 Mar 2026 21:54:53</div><div class="article-title">Body of missing Illinois student found in waters off beach of Barcelona</div><div class="article-desc">James ‘Jimmy’ Gracey was at nightclub in Spanish city for spring break when he separated from friends at about 3amThe body of James “Jimmy” Gracey, a 20-year-old college student from Illinois, was found Thursday in the water off a Barcelona beach, police in Spain said.Gracey’s body was found by police divers and positively identified, the press office for Catalonia’s regional police in Barcelona told the Associated Press. Continue reading...</div><div class="article-footer">Read on The Guardian &rarr;</div></a><a class="article-card" href="https://www.theguardian.com/world/2026/mar/19/concerns-over-role-ex-putin-interpreter-hungary-daria-boyarskaya" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="article-date">Thu, 19 Mar 2026 17:05:12</div><div class="article-title">Concerns raised over ex-Putin interpreter’s key role in monitoring Hungary vote</div><div class="article-desc">Daria Boyarskaya coordinating OSCE mission overseeing vote in which pro-Moscow Viktor Orbán could lose powerHungarian rights groups have raised concerns over the appointment of Vladimir Putin’s former interpreter to a key role in an international election monitoring mission, amid fears of Russian interference ahead of Hungary’s crucial vote next month.Daria Boyarskaya, who worked for many years for Russia’s foreign ministry and interpreted in numerous high-level meetings including one between Putin and Donald Trump, is now a senior adviser at the parliamentary assembly of the Organization for Security and Co-operation in Europe (OSCE-PA), based in Vienna. She is coordinating the body’s mission to monitor next month’s parliamentary election in Hungary. Continue reading...</div><div class="article-footer">Read on The Guardian &rarr;</div></a><a class="article-card" href="https://www.theguardian.com/world/live/2026/mar/19/europe-ukraine-russian-eu-loan-orban-hungary-tariffs-iran-nato-latest-news-updates" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="article-date">Thu, 19 Mar 2026 16:17:36</div><div class="article-title">No breakthrough on Hungary’s veto of EU’s €90bn loan to Ukraine – as it happened</div><div class="article-desc">This live blog is now closed, you can read more on this story hereGermany’s chancellor Friedrich Merz also called for de-escalation in the Middle East, welcoming what he said were signals by US president Donald Trump that combat action in Iran could come to an end, which could allow Europe to contribute to securing peace in the region.“I am expressly grateful that the US president sent a signal in this regard last night that he is prepared to bring the fighting to an end,” he told reporters ahead of an EU summit in Brussels in comments reported by Reuters. Continue reading...</div><div class="article-footer">Read on The Guardian &rarr;</div></a></div></div></div>
 <footer>
-  <span>Europe Briefing &nbsp;·&nbsp; 19 March 2026</span>
-  <span>
-    Sources: 
-    <a href="https://www.euronews.com" target="_blank" rel="noopener">Euronews</a> · 
-    <a href="https://www.dw.com/en/" target="_blank" rel="noopener">DW</a> · 
-    <a href="https://www.france24.com/en/" target="_blank" rel="noopener">France 24</a> · 
-    <a href="https://www.swissinfo.ch/eng" target="_blank" rel="noopener">SwissInfo</a> · 
-    <a href="https://euobserver.com" target="_blank" rel="noopener">EUobserver</a> ·
-    <a href="https://www.bbc.com/news" target="_blank" rel="noopener">BBC News</a> ·
-    <a href="https://www.theguardian.com" target="_blank" rel="noopener">The Guardian</a>
-  </span>
+  <span>Europe Briefing &nbsp;&middot;&nbsp; Friday 20 March 2026</span>
+  <span><a href="https://www.euronews.com" target="_blank">Euronews</a> &middot; <a href="https://www.dw.com/en/" target="_blank">DW</a> &middot; <a href="https://www.france24.com/en/" target="_blank">France 24</a> &middot; <a href="https://www.swissinfo.ch/eng" target="_blank">SwissInfo</a> &middot; <a href="https://euobserver.com" target="_blank">EUobserver</a> &middot; <a href="https://www.bbc.com/news" target="_blank">BBC News</a> &middot; <a href="https://www.theguardian.com" target="_blank">The Guardian</a></span>
 </footer>
-
-<script>
-  // Intersection Observer for scroll-triggered animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.theme-block, .stat-box').forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.07}s`;
-    observer.observe(el);
-  });
-</script>
-
 </body>
 </html>
