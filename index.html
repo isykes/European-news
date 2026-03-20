@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European News Intelligence OS</title>
+    <title>European News OS: 9-Source Sync</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -12,16 +12,16 @@
             --accent: #3b82f6;
             --ticker-bg: #ef4444;
         }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
         
-        /* THE TICKER - Now restored at the top */
+        /* TICKER */
         .ticker-wrap {
             width: 100%; overflow: hidden; background: var(--ticker-bg);
             color: white; padding: 12px 0; font-weight: 800; position: sticky; top: 0; z-index: 1000;
         }
         .ticker { display: inline-block; white-space: nowrap; animation: march 60s linear infinite; }
         @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .ticker span { margin-right: 60px; text-transform: uppercase; letter-spacing: 1px; }
+        .ticker span { margin-right: 60px; text-transform: uppercase; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
@@ -31,48 +31,40 @@
             padding: 2.5rem; border-radius: 16px; margin-bottom: 2.5rem;
             border-left: 10px solid var(--accent); border: 1px solid #334155;
         }
-        .status { font-size: 0.8rem; color: #22c55e; margin-bottom: 10px; font-weight: bold; }
 
-        /* THE GRID - 9 Sources */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .card { 
             background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
-            border-top: 5px solid var(--clr); transition: 0.3s;
+            border-top: 5px solid var(--clr); min-height: 180px;
             display: flex; flex-direction: column; justify-content: space-between;
         }
-        .card:hover { transform: translateY(-5px); background: #243147; }
-        .source-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
-        .live-headline { 
-            font-size: 0.95rem; color: #cbd5e1; line-height: 1.4; 
-            border-left: 2px solid var(--clr); padding-left: 12px; margin-bottom: 15px;
-        }
-        .time { font-size: 0.7rem; color: #64748b; }
+        .source-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
+        .live-headline { font-size: 0.9rem; color: #cbd5e1; line-height: 1.4; margin-bottom: 10px; border-left: 2px solid var(--clr); padding-left: 10px; }
+        .status-msg { font-size: 0.75rem; color: #64748b; font-style: italic; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div id="live-ticker" class="ticker">
-            <span>SYNCING 9 LIVE INTELLIGENCE FEEDS... STANDBY...</span>
+            <span>INITIALIZING GLOBAL SYNC... PLEASE WAIT...</span>
         </div>
     </div>
 
     <div class="container">
         <header class="aggregate-box">
-            <div class="status">● SYSTEM LIVE / MARCH 2026 AUTO-REFRESH ACTIVE</div>
             <h1>Continental Intelligence Synthesis</h1>
-            <p id="dynamic-summary">
-                The European narrative is currently a <strong>triangulation of crisis</strong>. 
-                From the drones in the East to the energy shifts in the Mediterranean and the security hardening in the Nordics, the continent is moving into a high-alert <strong>"Sovereignty Mode."</strong> This dashboard synthesizes the truth-checking of the West with the frontline reality of the East.
-            </p>
+            <p><strong>Strategic Summary:</strong> Europe is currently navigating a high-friction landscape. While the West (BBC, DW, France 24) focuses on the economic and truth-verification impact of the Iran war, the East and North (Kyiv, Yle, Poland) are reporting on physical sovereignty and border security. This 9-point grid provides a 360-degree view of the continent's stability.</p>
         </header>
 
-        <div id="news-grid" class="grid"></div>
+        <div id="news-grid" class="grid">
+            </div>
     </div>
 
     <script>
         const newsSources = [
-            { name: "BBC Verify", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+            { name: "BBC News", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
             { name: "France 24", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
             { name: "Deutsche Welle", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
             { name: "Kyiv Independent", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
@@ -83,44 +75,44 @@
             { name: "Euronews", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
         ];
 
-        async function updateDashboard() {
+        async function loadNews() {
             const grid = document.getElementById('news-grid');
             const ticker = document.getElementById('live-ticker');
-            grid.innerHTML = '';
-            ticker.innerHTML = '';
+            ticker.innerHTML = ''; // Clear initial message
 
             for (const s of newsSources) {
                 try {
+                    // Fetch data
                     const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.rss)}`);
                     const data = await res.json();
                     
-                    if (data.items && data.items.length > 0) {
-                        const topStory = data.items[0];
+                    if (data.status === 'ok') {
+                        const item = data.items[0];
 
-                        // Create Card
+                        // Build Card
                         const card = document.createElement('div');
                         card.className = 'card';
                         card.style.setProperty('--clr', s.clr);
                         card.innerHTML = `
                             <div class="source-title">${s.name}</div>
-                            <div class="live-headline"><strong>LATEST:</strong> ${topStory.title}</div>
-                            <div class="time">UPDATED: ${new Date(topStory.pubDate).toLocaleTimeString()}</div>
-                            <a href="${topStory.link}" target="_blank" style="color:var(--clr); font-size:0.8rem; margin-top:10px; display:block; text-decoration:none; font-weight:bold;">OPEN SOURCE →</a>
+                            <div class="live-headline">${item.title}</div>
+                            <div class="status-msg">Last Updated: ${new Date(item.pubDate).toLocaleTimeString()}</div>
+                            <a href="${item.link}" target="_blank" style="color:var(--clr); font-size: 0.8rem; margin-top:10px; text-decoration: none; font-weight:bold;">View Intel →</a>
                         `;
                         grid.appendChild(card);
 
                         // Add to Ticker
                         const span = document.createElement('span');
-                        span.innerText = `🔴 ${s.name.toUpperCase()}: ${topStory.title}`;
+                        span.innerHTML = `🔴 ${s.name.toUpperCase()}: ${item.title}`;
                         ticker.appendChild(span);
                     }
-                } catch (err) {
-                    console.error("Link broken for", s.name);
+                } catch (e) {
+                    console.error("Error loading " + s.name);
                 }
             }
         }
 
-        updateDashboard();
+        loadNews();
     </script>
 </body>
 </html>
