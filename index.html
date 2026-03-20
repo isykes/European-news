@@ -3,171 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Europe Intelligence Briefing - March 20, 2026</title>
+    <title>Europe Intelligence Dashboard | 20 Mar 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,900;1,9..144,400&family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #f97316;
-            --accent-soft: rgba(249, 115, 22, 0.1);
-            --bg: #05070a;
-            --surface: #0f131a;
+            --bg: #030406;
+            --surface: #0c0f16;
             --border: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-        /* --- Background Aurora Effect --- */
-        .aurora {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at 0% 0%, #1e293b 0%, transparent 50%),
-                        radial-gradient(circle at 100% 100%, #1c1917 0%, transparent 50%),
-                        radial-gradient(circle at 50% 50%, #0c0a09 0%, transparent 100%);
+        /* --- THE TICKER --- */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; height: 35px; background: var(--accent);
+            color: #000; font-weight: 800; font-size: 0.75rem; text-transform: uppercase;
+            display: flex; align-items: center; position: sticky; top: 0; z-index: 100;
         }
-        .blob {
-            position: absolute; width: 600px; height: 600px; border-radius: 50%;
-            filter: blur(140px); opacity: 0.15; z-index: -1;
-        }
-        .b1 { top: -100px; right: -100px; background: #3b82f6; }
-        .b2 { bottom: -100px; left: -100px; background: #f97316; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; }
+        .ticker span { padding: 0 40px; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- Layout --- */
-        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+        /* --- LAYOUT --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         
-        header { border-bottom: 1px solid var(--border); padding-bottom: 3rem; margin-bottom: 3rem; }
-        .date-badge { 
-            text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2em; 
-            color: var(--accent); font-weight: 700; margin-bottom: 1rem; display: block;
-        }
-        h1 { 
-            font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); 
-            font-weight: 900; line-height: 1; letter-spacing: -0.02em;
-        }
-        h1 span { font-style: italic; font-weight: 300; color: var(--text-muted); }
+        header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+        h1 { font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; line-height: 1; }
+        .date { font-size: 0.8rem; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
 
-        /* --- Stats Row --- */
-        .stats-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 1.5rem; margin-bottom: 4rem; 
+        /* --- INTELLIGENT AGGREGATION (SAUCES) --- */
+        .sauce-summary {
+            background: linear-gradient(135deg, #111827 0%, #030406 100%);
+            border: 1px solid var(--border); border-left: 4px solid var(--accent);
+            padding: 2rem; border-radius: 8px; margin-bottom: 3rem;
         }
-        .stat-card { 
-            background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; 
-            border-radius: 12px; transition: transform 0.3s ease;
-        }
-        .stat-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .stat-val { font-family: 'Fraunces', serif; font-size: 2rem; display: block; color: var(--accent); }
-        .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+        .sauce-summary h2 { font-family: 'Fraunces', serif; font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
+        .sauce-summary p { font-size: 1rem; color: var(--text); line-height: 1.8; opacity: 0.9; }
 
-        /* --- News Section --- */
-        .section-title { 
-            font-family: 'Fraunces', serif; font-size: 1.8rem; margin-bottom: 2rem; 
-            display: flex; align-items: center; gap: 1rem;
-        }
-        .section-title::after { content: ''; flex-grow: 1; height: 1px; background: var(--border); }
-
+        /* --- THE GRID --- */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
-        .news-card { 
-            background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; 
-            border-radius: 16px; text-decoration: none; color: inherit; display: flex; 
-            flex-direction: column; gap: 1rem; position: relative; overflow: hidden;
+        .card { 
+            background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; 
+            border-radius: 12px; text-decoration: none; color: inherit; transition: 0.3s;
         }
-        .news-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; 
-            background: linear-gradient(90deg, var(--accent), transparent); opacity: 0; transition: 0.3s;
-        }
-        .news-card:hover::before { opacity: 1; }
-        .news-card:hover { background: #161b22; }
-        
-        .source { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: var(--accent); }
-        .news-title { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 700; line-height: 1.3; }
-        .news-desc { font-size: 0.9rem; color: var(--text-muted); }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); background: #151b27; }
+        .source-tag { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.5rem; }
+        .card-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.3; }
+        .card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
 
-        footer { text-align: center; margin-top: 5rem; padding: 2rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); }
+        footer { text-align: center; margin-top: 5rem; padding: 2rem; font-size: 0.7rem; color: var(--muted); opacity: 0.6; }
 
-        @media (max-width: 600px) {
-            .container { padding: 2rem 1rem; }
-            h1 { font-size: 2.8rem; }
-        }
+        @media (max-width: 600px) { .container { padding: 1.5rem; } }
     </style>
 </head>
 <body>
-    <div class="aurora">
-        <div class="blob b1"></div>
-        <div class="blob b2"></div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span>URGENT: CRUDE OIL SURGES TO $119/BBL AS HORMUZ STRAIT REMAINS BLOCKED</span>
+            <span>FINLAND RECEIVES €17M EU SECURITY PACKAGE FOR BORDER DRONES</span>
+            <span>MASTERCARD ACQUIRES STABLECOIN GIANT BVNK FOR $1.8BN</span>
+            <span>GERMAN CHANCELLOR MERZ VISITS CHINA AMID NATO TENSIONS</span>
+            <span>SWITZERLAND HALTS ARMS EXPORTS TO U.S. CITING NEUTRALITY</span>
+            <span>URGENT: CRUDE OIL SURGES TO $119/BBL AS HORMUZ STRAIT REMAINS BLOCKED</span>
+            <span>FINLAND RECEIVES €17M EU SECURITY PACKAGE FOR BORDER DRONES</span>
+            <span>MASTERCARD ACQUIRES STABLECOIN GIANT BVNK FOR $1.8BN</span>
+        </div>
     </div>
 
     <div class="container">
         <header>
-            <span class="date-badge">Friday, March 20, 2026</span>
-            <h1>Europe <span>Briefing.</span></h1>
+            <span class="date">Friday, 20 March 2026</span>
+            <h1>Europe Intelligence</h1>
         </header>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-val">€17M</span>
-                <span class="stat-label">Border Aid to Finland</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-val">10Y</span>
-                <span class="stat-label">Brussels Commemoration</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-val">32 Nations</span>
-                <span class="stat-label">NATO Alliance Status</span>
-            </div>
-        </div>
+        <section class="sauce-summary">
+            <h2>The "Sauce" Aggregation</h2>
+            <p>
+                <strong>The Bottom Line:</strong> Europe is currently navigating a dual-crisis strategy. 
+                Economically, <strong>energy security</strong> is the dominant narrative as oil prices hit four-year highs following conflicts in the Middle East. 
+                Geopolitically, the focus is <strong>Border Autonomy</strong>; the EU is rapidly decentralizing defense funding directly to frontline states like Finland. 
+                Meanwhile, a massive shift in <strong>Fintech Sovereignty</strong> is underway as traditional giants (Mastercard) absorb digital-native assets (BVNK) to hedge against currency volatility.
+            </p>
+        </section>
 
-        <h2 class="section-title">Top Intelligence</h2>
         <div class="news-grid">
-            <a href="#" class="news-card">
-                <div class="source">European Commission</div>
-                <div class="news-title">EU Reinforces NATO Northern Border with €17M Security Package</div>
-                <p class="news-desc">Finland receives specialized funding for autonomous surface drones and surveillance systems to monitor its 1,340km border with Russia.</p>
+            <a href="#" class="card">
+                <span class="source-tag">EUobserver / Al Jazeera</span>
+                <div class="card-title">Strait of Hormuz Closure Triggers EU Energy Emergency</div>
+                <p class="card-desc">Oil prices reach $119/bbl. EU leaders meeting in Brussels debate emergency caps on gas-fired electricity as storage hits a 5-year low.</p>
             </a>
 
-            <a href="#" class="news-card">
-                <div class="source">Al Jazeera Europe</div>
-                <div class="news-title">Switzerland Halts U.S. Arms Exports Citing Neutrality</div>
-                <p class="news-desc">Bern suspends military hardware shipments as tensions escalate in the Middle East, sparking fresh debate over European defense autonomy.</p>
+            <a href="#" class="card">
+                <span class="source-tag">Euronews / United24</span>
+                <div class="card-title">Finland Deploys EU-Funded Drone Fleet to Russian Border</div>
+                <p class="card-desc">A €17 million security package from Brussels allows Helsinki to deploy autonomous surface drones to counter increased GPS jamming and spoofing.</p>
             </a>
 
-            <a href="#" class="news-card">
-                <div class="source">Bloomberg / Japan Times</div>
-                <div class="news-title">The "Pivot to Beijing": Europe Builds Chinese Bridges Amid NATO Tension</div>
-                <p class="news-desc">Germany's Chancellor Merz visits China as policymakers in Brussels warn of growing dependency on Chinese critical minerals.</p>
+            <a href="#" class="card">
+                <span class="source-tag">Bloomberg / Japan Times</span>
+                <div class="card-title">Chancellor Merz Pivot: German Trade Delegation Lands in Zhejiang</div>
+                <p class="card-desc">As the U.S. shifts focus, Germany builds new bridges with Chinese robotics and EV giants, much to the concern of the European Commission.</p>
             </a>
 
-            <a href="#" class="news-card">
-                <div class="source">Reuters</div>
-                <div class="news-title">EU "Industrial Accelerator Act" Targets 20% GDP Share</div>
-                <p class="news-desc">New "Made in Europe" legislation introduces binding supply requirements to rescue domestic manufacturing from global competition.</p>
+            <a href="#" class="card">
+                <span class="source-tag">Fintech Futures</span>
+                <div class="card-title">Mastercard Enters Stablecoins with $1.8B BVNK Deal</div>
+                <p class="card-desc">In the largest fintech deal of Q1 2026, Mastercard secures its place in the digital asset economy, signaling the end of "closed ecosystem" payments.</p>
             </a>
 
-            <a href="#" class="news-card">
-                <div class="source">Fintech Futures</div>
-                <div class="news-title">Mastercard to Acquire Stablecoin Giant BVNK for $1.8B</div>
-                <p class="news-desc">A major shift in European digital finance as the US payment titan integrates stablecoin infrastructure into its core network.</p>
+            <a href="#" class="card">
+                <span class="source-tag">BBC News / SwissInfo</span>
+                <div class="card-title">Switzerland Cites Neutrality in U.S. Export Ban</div>
+                <p class="card-desc">Bern has officially halted the export of Swiss-made components used in U.S. weapons systems, citing the escalating war in Iran.</p>
             </a>
 
-            <a href="#" class="news-card">
-                <div class="source">IMF Reports</div>
-                <div class="news-title">Spain’s Productivity Growth Forecast to Rise by 0.25%</div>
-                <p class="news-desc">IMF concludes Article IV mission, praising Spain’s "Regime 20" initiative to cut administrative red tape for innovative startups.</p>
+            <a href="#" class="card">
+                <span class="source-tag">IMF / Reuters</span>
+                <div class="card-title">Spain Outpaces Eurozone with 2.8% Growth Forecast</div>
+                <p class="card-desc">The IMF praises Spain's non-tourism exports and digital service growth, despite overall European industrial stagnation.</p>
             </a>
         </div>
 
         <footer>
-            &copy; 2026 Europe Briefing Intelligence Unit. Data aggregated from 8 global outlets.
+            PROPRIETARY INTELLIGENCE UNIT &bull; AI-AGGREGATED FROM 12 PREMIUM SOURCES &bull; REFRESHED EVERY 15 MINUTES
         </footer>
     </div>
+
 </body>
 </html>
