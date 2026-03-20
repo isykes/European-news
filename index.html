@@ -2,48 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EU Strategic Command | 9-Source Sync</title>
+    <title>EU Strategic Command | 9-Source Stable</title>
     <style>
         :root { --bg: #020617; --card: #0f172a; --text: #f1f5f9; --accent: #3b82f6; --border: #1e293b; --red: #7f1d1d; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
         
-        .top-bar { display: grid; grid-template-columns: 1fr 180px; background: var(--red); position: sticky; top: 0; z-index: 1000; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .top-bar { display: grid; grid-template-columns: 1fr 180px; background: var(--red); position: sticky; top: 0; z-index: 1000; align-items: center; }
         .ticker-wrap { overflow: hidden; padding: 10px 0; }
         .ticker { display: inline-block; white-space: nowrap; animation: march 80s linear infinite; }
         @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .ticker span { margin-right: 60px; text-transform: uppercase; font-size: 0.8rem; font-weight: 800; color: #fff; }
+        .ticker span { margin-right: 60px; text-transform: uppercase; font-size: 0.8rem; font-weight: 800; }
         .clock { background: rgba(0,0,0,0.4); padding: 10px; text-align: center; font-family: monospace; font-size: 1rem; border-left: 1px solid rgba(255,255,255,0.1); }
 
         .container { max-width: 1450px; margin: 0 auto; padding: 1.5rem; }
         .briefing { background: linear-gradient(135deg, #1e293b, #020617); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 5px solid var(--accent); border: 1px solid var(--border); }
-        .briefing h2 { margin: 0 0 8px 0; font-size: 0.9rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
         .briefing p { margin: 0; font-size: 1.05rem; opacity: 0.9; font-weight: 300; line-height: 1.6; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 15px; }
-        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 240px; display: flex; flex-direction: column; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); border-color: var(--accent); }
+        .card { background: var(--card); border-radius: 8px; padding: 1.2rem; border-top: 4px solid var(--clr); border: 1px solid var(--border); min-height: 240px; display: flex; flex-direction: column; }
         
         .geo { font-size: 0.65rem; text-transform: uppercase; color: var(--clr); font-weight: 900; margin-bottom: 6px; letter-spacing: 1px; }
         .title { font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-        .item { margin-bottom: 12px; padding-left: 12px; border-left: 2px solid #334155; font-size: 0.9rem; }
-        .link { text-decoration: none; color: #cbd5e1; display: block; line-height: 1.4; transition: 0.2s; }
-        .link:hover { color: #fff; transform: translateX(3px); }
-        .loading { font-size: 0.8rem; color: #475569; font-style: italic; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .item { margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #334155; font-size: 0.9rem; }
+        .link { text-decoration: none; color: #cbd5e1; display: block; line-height: 1.4; }
+        .link:hover { color: #fff; }
+        
+        .status-msg { font-size: 0.75rem; margin-top: auto; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .retry-btn { cursor: pointer; color: var(--accent); text-decoration: underline; font-weight: bold; }
+        .loading-shimmer { color: #475569; font-style: italic; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING MULTI-SOURCE SYNC... MARCH 20, 2026... STANDBY FOR INTEL...</span></div></div>
+    <div class="ticker-wrap"><div id="ticker" class="ticker"><span>ESTABLISHING SECURE INTEL STREAM... MARCH 20, 2026...</span></div></div>
     <div id="clock" class="clock">00:00:00</div>
 </div>
 
 <div class="container">
     <header class="briefing">
-        <h2>Executive Briefing: March 2026</h2>
-        <p>Europe tracks two simultaneous fronts: <strong>The Industrial Energy Crisis</strong> in the West and <strong>Total Defense Readiness</strong> across the Nordic-Eastern Shield. This terminal provides real-time verification across 9 critical geographic vectors.</p>
+        <h2 style="margin:0 0 10px 0; color:var(--accent); font-size:0.9rem; letter-spacing:2px;">EXECUTIVE SUMMARY</h2>
+        <p>Europe tracks two simultaneous fronts: <strong>The Industrial Energy Crisis</strong> in the West and <strong>Total Defense Readiness</strong> across the Nordic-Eastern Shield. This terminal provides 27 points of verification across 9 critical geographic vectors.</p>
     </header>
     <div id="grid" class="grid"></div>
 </div>
@@ -64,56 +64,16 @@
     function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString([], {hour12: false}); }
     setInterval(updateClock, 1000);
 
-    async function fetchWithRetry(s, attempt = 1) {
-        const container = document.getElementById(`feed-${s.id}`);
+    async function fetchIntel(s) {
+        const target = document.getElementById(`feed-${s.id}`);
+        target.innerHTML = '<span class="loading-shimmer">Syncing Data Stream...</span>';
+        
+        // Proxy Rotation: Primary = corsproxy.io, Secondary = allorigins
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(s.rss)}`;
+        
         try {
-            // Using corsproxy.io - a more reliable prefix-based proxy
-            const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(s.rss)}`);
+            const res = await fetch(proxyUrl);
+            if (!res.ok) throw new Error("Throttled");
             const text = await res.text();
             const xml = new DOMParser().parseFromString(text, "text/xml");
             const items = Array.from(xml.querySelectorAll("item")).slice(0, 3);
-
-            if (items.length === 0) throw new Error("Empty feed");
-
-            let html = '';
-            items.forEach(item => {
-                const title = item.querySelector("title").textContent;
-                const link = item.querySelector("link").textContent;
-                html += `<div class="item"><a href="${link}" target="_blank" class="link">${title}</a></div>`;
-            });
-
-            container.innerHTML = html;
-            
-            // Add top story to ticker
-            const span = document.createElement('span');
-            span.innerText = `[${s.name.toUpperCase()}]: ${items[0].querySelector("title").textContent} • `;
-            document.getElementById('ticker').appendChild(span);
-
-        } catch (e) {
-            if (attempt < 3) {
-                container.innerHTML = `<span class="loading">Retry attempt ${attempt}...</span>`;
-                setTimeout(() => fetchWithRetry(s, attempt + 1), 2000);
-            } else {
-                container.innerHTML = `<span style="color:#ef4444; font-size:0.8rem;">Sync Failed. Proxy Throttled.</span>`;
-            }
-        }
-    }
-
-    // Initialize the Grid Structure immediately
-    const grid = document.getElementById('grid');
-    sources.forEach(s => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.style.setProperty('--clr', s.clr);
-        card.innerHTML = `
-            <div class="geo">${s.geo}</div>
-            <div class="title">${s.name}</div>
-            <div id="feed-${s.id}"><span class="loading">Establishing handshake...</span></div>
-        `;
-        grid.appendChild(card);
-        // Stagger the calls to avoid simultaneous proxy hitting
-        setTimeout(() => fetchWithRetry(s), sources.indexOf(s) * 400);
-    });
-</script>
-</body>
-</html>
