@@ -1,98 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Europe Briefing - Friday 20 March 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { --bg:#0b0f1a; --surface:#111827; --border:rgba(255,255,255,0.08); --text:#e8eaf0; --muted:#8890a4; }
-html { scroll-behavior:smooth; }
-body { background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden; }
-.hero { position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 6vw;overflow:hidden; }
-.hero-bg-blobs { position:absolute;inset:0;z-index:0;pointer-events:none; }
-.blob { position:absolute;border-radius:50%;filter:blur(120px);opacity:0.15; }
-.blob-1{width:55vw;height:55vw;top:-15vw;left:-10vw;background:#f97316;animation:drift1 14s ease-in-out infinite alternate;}
-.blob-2{width:40vw;height:40vw;top:20vw;right:-8vw;background:#38bdf8;animation:drift2 18s ease-in-out infinite alternate;}
-.blob-3{width:35vw;height:35vw;bottom:-5vw;left:30vw;background:#a78bfa;animation:drift3 22s ease-in-out infinite alternate;}
-@keyframes drift1{to{transform:translate(5vw,8vw) scale(1.08);}}
-@keyframes drift2{to{transform:translate(-6vw,5vw) scale(0.95);}}
-@keyframes drift3{to{transform:translate(4vw,-7vw) scale(1.1);}}
-.hero-inner{position:relative;z-index:1;max-width:860px;}
-.eyebrow{display:inline-flex;align-items:center;gap:0.6rem;font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.8rem;opacity:0;animation:slideUp 0.7s 0.1s ease forwards;}
-.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:#34d399;animation:pulse-dot 2s ease-in-out infinite;}
-@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.7);opacity:0.5;}}
-.hero h1{font-family:'Fraunces',serif;font-size:clamp(3.2rem,8vw,7.5rem);font-weight:900;line-height:0.95;letter-spacing:-0.03em;margin-bottom:1.6rem;opacity:0;animation:slideUp 0.8s 0.25s ease forwards;}
-.hero h1 em{font-style:italic;font-weight:300;background:linear-gradient(135deg,#f97316 0%,#a78bfa 50%,#38bdf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-lead{font-size:clamp(1rem,2vw,1.18rem);color:var(--muted);max-width:580px;line-height:1.7;margin-bottom:2.5rem;opacity:0;animation:slideUp 0.8s 0.4s ease forwards;}
-.source-pills{display:flex;flex-wrap:wrap;gap:0.5rem;opacity:0;animation:slideUp 0.8s 0.55s ease forwards;}
-.pill{display:inline-block;padding:0.3rem 0.9rem;border-radius:100px;border:1px solid var(--border);font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;background:rgba(255,255,255,0.04);color:var(--muted);transition:all 0.25s;text-decoration:none;}
-.pill:hover{border-color:rgba(255,255,255,0.3);color:var(--text);}
-.scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:slideUp 0.8s 1s ease forwards;}
-.scroll-cue span{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
-.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--muted),transparent);animation:scrollBob 2s ease-in-out infinite;}
-@keyframes scrollBob{0%,100%{opacity:0.4;}50%{opacity:1;}}
-.main-wrap{max-width:1200px;margin:0 auto;padding:3rem 4vw 4rem;}
-.status-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.8rem;padding:0.75rem 1.2rem;background:var(--surface);border:1px solid var(--border);border-radius:4px;margin-bottom:1.5rem;}
-.status-left{font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:0.6rem;}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;animation:pulse-dot 2s ease-in-out infinite;}
-.status-left strong{color:#34d399;}
-.source-status-row{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:2rem;}
-.src-status{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.6rem;border-radius:100px;border:1px solid;background:transparent;}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:2px;margin-bottom:3rem;background:var(--border);}
-.stat-box{background:var(--surface);padding:1.5rem 1.2rem;text-align:center;}
-.stat-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;line-height:1;margin-bottom:0.3rem;}
-.stat-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
-.theme-section{margin-bottom:3.5rem;opacity:0;transform:translateY(20px);animation:slideUp 0.5s ease forwards;}
-.theme-header{padding:1.2rem 1.5rem;background:var(--surface);border:1px solid var(--border);margin-bottom:2px;}
-.theme-title-row{display:flex;align-items:baseline;gap:1rem;margin-bottom:0.5rem;}
-.theme-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;}
-.theme-count{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
-.theme-summary{font-size:0.82rem;color:var(--muted);line-height:1.6;}
-.stories-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;background:var(--border);}
-.story-card{background:var(--surface);padding:1.2rem 1.4rem;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:0.4rem;transition:background 0.2s;position:relative;overflow:hidden;}
-.story-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--src-color,#888);opacity:0.5;transition:opacity 0.2s;}
-.story-card:hover{background:#16213a;}
-.story-card:hover::before{opacity:1;}
-.card-date{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
-.card-title{font-family:'Fraunces',serif;font-size:0.95rem;font-weight:700;line-height:1.3;color:var(--text);}
-.card-desc{font-size:0.78rem;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.card-footer{margin-top:auto;padding-top:0.6rem;}
-.citation{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.15rem 0.5rem;border-radius:3px;text-decoration:none;font-weight:500;}
-.more-count{font-size:0.68rem;color:var(--muted);padding:0.6rem 1rem;background:var(--surface);border:1px solid var(--border);border-top:none;letter-spacing:0.1em;}
-footer{border-top:1px solid var(--border);padding:1.8rem 4vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.63rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
-footer a{color:var(--muted);text-decoration:none;}
-footer a:hover{color:var(--text);}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:600px){
-  .stories-grid{grid-template-columns:1fr;}
-  .stats-row{grid-template-columns:repeat(3,1fr);}
-  .hero{padding:3rem 5vw;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>European Intelligence Hub</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f1f5f9;
+            --accent: #3b82f6;
+            --ticker-bg: #ef4444;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        
+        /* Live Ticker */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; background: var(--ticker-bg);
+            color: white; padding: 10px 0; font-weight: bold; position: sticky; top: 0; z-index: 100;
+        }
+        .ticker { display: inline-block; white-space: nowrap; animation: march 30s linear infinite; }
+        @keyframes march { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .ticker span { margin-right: 50px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+        /* Analysis Box */
+        .analysis-box { 
+            background: #1e293b; padding: 2.5rem; border-radius: 12px; margin-bottom: 2rem;
+            border-left: 8px solid var(--accent); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+        }
+        .analysis-box h1 { margin-top: 0; color: #60a5fa; font-size: 2.5rem; }
+        .analysis-box p { font-size: 1.2rem; opacity: 0.8; line-height: 1.8; }
+
+        /* Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { 
+            background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
+            border-top: 6px solid var(--clr); transition: 0.3s;
+        }
+        .card:hover { transform: scale(1.02); background: #334155; }
+        .tag { font-size: 0.7rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; display: inline-block; }
+        .btn { text-decoration: none; color: white; border: 1px solid #64748b; padding: 8px 16px; border-radius: 6px; display: inline-block; margin-top: 15px; }
+    </style>
 </head>
 <body>
-<section class="hero">
-<div class="hero-bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
-<div class="hero-inner">
-<div class="eyebrow"><span class="eyebrow-dot"></span>Friday 20 March 2026 - Daily Briefing</div>
-<h1>Europe<br><em>Briefing</em></h1>
-<p class="hero-lead">Headlines from 6 outlets, grouped by theme with citations - automatically refreshed every morning.</p>
-<div class="source-pills"><a class="pill" href="https://www.euronews.com" target="_blank">Euronews</a><a class="pill" href="https://www.dw.com/en/" target="_blank">Deutsche Welle</a><a class="pill" href="https://www.france24.com/en/" target="_blank">France 24</a><a class="pill" href="https://www.swissinfo.ch/eng" target="_blank">SwissInfo</a><a class="pill" href="https://euobserver.com" target="_blank">EUobserver</a><a class="pill" href="https://www.bbc.com/news" target="_blank">BBC News</a><a class="pill" href="https://www.theguardian.com" target="_blank">The Guardian</a></div>
-</div>
-<div class="scroll-cue"><span>Scroll</span><div class="scroll-arrow"></div></div>
-</section>
-<div class="main-wrap">
-<div class="status-bar">
-<div class="status-left"><span class="live-dot"></span>Last updated <strong>07:49 UTC</strong> - 60 stories from 6 outlets</div>
-</div>
-<div class="source-status-row"><span class="src-status" style="color:#38bdf8;border-color:#38bdf855">Euronews &#10003;</span><span class="src-status" style="color:#f97316;border-color:#f9731655">Deutsche Welle &#10003;</span><span class="src-status" style="color:#a78bfa;border-color:#a78bfa55">France 24 &#10003;</span><span class="src-status" style="opacity:0.35;color:#f472b6;border-color:#f472b655">SwissInfo &#10007;</span><span class="src-status" style="color:#34d399;border-color:#34d39955">EUobserver &#10003;</span><span class="src-status" style="color:#facc15;border-color:#facc1555">BBC News &#10003;</span><span class="src-status" style="color:#fb923c;border-color:#fb923c55">The Guardian &#10003;</span></div>
-<div class="stats-row"><div class="stat-box"><div class="stat-num" style="color:#f97316">39</div><div class="stat-label">War &amp; Conflict</div></div><div class="stat-box"><div class="stat-num" style="color:#38bdf8">1</div><div class="stat-label">EU Stories</div></div><div class="stat-box"><div class="stat-num" style="color:#a78bfa">8</div><div class="stat-label">Diplomacy</div></div><div class="stat-box"><div class="stat-num" style="color:#34d399">4</div><div class="stat-label">Economy</div></div><div class="stat-box"><div class="stat-num" style="color:#f472b6">8</div><div class="stat-label">Society &amp; Science</div></div><div class="stat-box"><div class="stat-num" style="color:#facc15">0</div><div class="stat-label">UK Stories</div></div></div>
-<div class="theme-section" style="animation-delay:0.0s"><div class="theme-header" style="border-left:4px solid #f97316;padding-left:1rem"><div class="theme-title-row"><h2 class="theme-title" style="color:#f97316">War & Conflict</h2><span class="theme-count">39 stories</span></div><p class="theme-summary">39 stories across 6 outlets: Euronews, Deutsche Welle, France 24, EUobserver and 2 more.</p></div><div class="stories-grid"><a class="story-card" href="http://www.euronews.com/2026/03/20/israel-strikes-tehran-as-iran-continues-targeting-energy-infrastructure-across-gulf" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Fri, 20 Mar 2026 08:17:12</div><div class="card-title">Israel strikes Tehran as Iran continues targeting energy infrastructure across Gulf</div><div class="card-desc">Iran ramped up its campaign on energy sites across the Gulf after Israel struck Iran’s South Pars offshore natural gas field in the Persian Gulf on Wednesday.</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="http://www.euronews.com/2026/03/20/europes-fertiliser-crisis-prices-surge-due-to-iran-war-and-dependence-on-russia" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Fri, 20 Mar 2026 06:30:04</div><div class="card-title">Europe's fertilizer crisis: prices surge due to Iran war and dependence on Russia</div><div class="card-desc">The fertilizer market is facing a double crisis: the Iran war is driving up prices, the Strait of Hormuz is blocked - and at the same time it is becoming clear how dependent Europe...</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="http://www.euronews.com/2026/03/20/israel-and-iran-exchange-strikes-on-persian-new-year-as-war-jolts-energy-markets" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Fri, 20 Mar 2026 06:22:53</div><div class="card-title">Israel and Iran exchange strikes on Persian New Year as war jolts energy markets</div><div class="card-desc">Activists reported hearing strikes around Iran’s capital, Tehran, just as blasts were heard in East Jerusalem with sirens and booms sounding across the city.</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="http://www.euronews.com/2026/03/19/qatar-pm-after-gulf-energy-attacks-this-war-must-be-stopped-immediately" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Thu, 19 Mar 2026 23:04:41</div><div class="card-title">Qatar PM after Gulf energy attacks: 'This war must be stopped immediately'</div><div class="card-desc">Qatar’s prime minister has called for an immediate end to the conflict after missile strikes hit energy facilities across the Gulf, including the country’s key Ras Laffan hub. Doha...</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="http://www.euronews.com/video/2026/03/19/iranian-tv-shows-man-rescued-from-south-khorasan-rubble" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Thu, 19 Mar 2026 22:52:16</div><div class="card-title">Iranian TV shows man rescued from South Khorasan rubble</div><div class="card-desc">Red Crescent teams rescue survivors in South Khorasan after reported US-Israeli strikes, as Iran counts rising civilian toll and mounting destruction.</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="http://www.euronews.com/video/2026/03/19/belgium-eu-leaders-meet-as-ukraine-loan-remains-blocked" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Thu, 19 Mar 2026 22:33:22</div><div class="card-title">Belgium: EU leaders meet as Ukraine loan remains blocked</div><div class="card-desc">EU leaders show unity but fail to approve €90bn loan for Kyiv as Hungary’s Viktor Orban vetoes over oil transit dispute with Ukraine.</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a></div><div class="more-count">+ 33 more stories in this category</div></div><div class="theme-section" style="animation-delay:0.1s"><div class="theme-header" style="border-left:4px solid #38bdf8;padding-left:1rem"><div class="theme-title-row"><h2 class="theme-title" style="color:#38bdf8">European Union</h2><span class="theme-count">1 stories</span></div><p class="theme-summary">1 story across 1 outlet: The Guardian.</p></div><div class="stories-grid"><a class="story-card" href="https://www.theguardian.com/commentisfree/2026/mar/19/spain-juan-carlos-return-exile-history-king-abu-dhabi" target="_blank" rel="noopener" style="--src-color:#fb923c"><div class="card-date">Thu, 19 Mar 2026 05:00:59</div><div class="card-title">Disgraced Juan Carlos wants to return from exile a hero. But Spain’s murky history still dogs him | Giles Tremlett</div><div class="card-desc">The ex-king has been stranded in Abu Dhabi after a series of scandals. Now newly released files support his claim to have saved Spanish democracy When Spain’s King Juan Carlos fell...</div><div class="card-footer"><a class="citation" href="https://www.theguardian.com" target="_blank" rel="noopener" style="background:#fb923c22;color:#fb923c;border:1px solid #fb923c55">The Guardian</a></div></a></div></div><div class="theme-section" style="animation-delay:0.2s"><div class="theme-header" style="border-left:4px solid #a78bfa;padding-left:1rem"><div class="theme-title-row"><h2 class="theme-title" style="color:#a78bfa">Diplomacy & Politics</h2><span class="theme-count">8 stories</span></div><p class="theme-summary">8 stories across 5 outlets: Deutsche Welle, France 24, EUobserver, BBC News and 1 more.</p></div><div class="stories-grid"><a class="story-card" href="https://www.dw.com/en/us-trump-image-approved-for-commemorative-gold-coin/a-76443197?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="card-date">Fri, 20 Mar 2026 03:51:00</div><div class="card-title">US: Trump image approved for commemorative gold coin</div><div class="card-desc">An arts panel appointed by Donald Trump backed plans for a 24-karat commemorative coin featuring the US president, drawing criticism from Democrats.</div><div class="card-footer"><a class="citation" href="https://www.dw.com/en/" target="_blank" rel="noopener" style="background:#f9731622;color:#f97316;border:1px solid #f9731655">Deutsche Welle</a></div></a><a class="story-card" href="https://www.dw.com/en/belarus-releases-250-political-prisoners-as-part-of-us-deal/a-76442237?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="card-date">Thu, 19 Mar 2026 21:42:00</div><div class="card-title">Belarus releases 250 political prisoners as part of US deal</div><div class="card-desc">Belarus freed 250 political prisoners in its largest release yet — a move celebrated as a humanitarian breakthrough and tied to the easing of US sanctions. However, many remain beh...</div><div class="card-footer"><a class="citation" href="https://www.dw.com/en/" target="_blank" rel="noopener" style="background:#f9731622;color:#f97316;border:1px solid #f9731655">Deutsche Welle</a></div></a><a class="story-card" href="https://www.france24.com/en/france/20260319-french-socialists-split-over-alliance-with-hard-left-party-in-mayoral-runoffs" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="card-date">Thu, 19 Mar 2026 21:20:01</div><div class="card-title">French Socialists split over alliance with hard-left party in mayoral runoffs</div><div class="card-desc">Several candidates from France’s mainstream left have joined forces with Jean-Luc Mélenchon’s France Unbowed to boost their chances in mayoral runoffs on Sunday, even as others rej...</div><div class="card-footer"><a class="citation" href="https://www.france24.com/en/" target="_blank" rel="noopener" style="background:#a78bfa22;color:#a78bfa;border:1px solid #a78bfa55">France 24</a></div></a><a class="story-card" href="https://euobserver.com/207650/24-days-to-election-three-ukrainians-banned-from-hungary-as-threat-to-orbans-life/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="card-date">Thu, 19 Mar 2026 15:42:22</div><div class="card-title">24 days to election: Three Ukrainians banned from Hungary as ‘threat to Orbán’s life’</div><div class="card-desc">With just over three weeks to go, a literal 'false flag' operation at a Tisza rally, a potential JD Vance (but not Donald Trump) visit, some suspect candidates name-changing to con...</div><div class="card-footer"><a class="citation" href="https://euobserver.com" target="_blank" rel="noopener" style="background:#34d39922;color:#34d399;border:1px solid #34d39955">EUobserver</a></div></a><a class="story-card" href="https://euobserver.com/207607/meps-greenlight-us-trade-pact-after-steel-promises/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="card-date">Thu, 19 Mar 2026 12:07:41</div><div class="card-title">MEPs greenlight US trade pact after steel promises</div><div class="card-desc">MEPs expect to take a final plenary vote on a hotly contested EU-US trade deal in Strasbourg next Thursday.</div><div class="card-footer"><a class="citation" href="https://euobserver.com" target="_blank" rel="noopener" style="background:#34d39922;color:#34d399;border:1px solid #34d39955">EUobserver</a></div></a><a class="story-card" href="https://euobserver.com/207575/meloni-wanted-to-tame-italys-prosecutors-she-may-end-up-empowering-them-instead/" target="_blank" rel="noopener" style="--src-color:#34d399"><div class="card-date">Thu, 19 Mar 2026 10:10:39</div><div class="card-title">Meloni wanted to tame Italy’s prosecutors. She may end up empowering them instead</div><div class="card-desc">On March 22 and 23, Italians will vote in a referendum intended to curb the power of the country’s  prosecutors. But the reform championed by prime minister Giorgia Meloni could pr...</div><div class="card-footer"><a class="citation" href="https://euobserver.com" target="_blank" rel="noopener" style="background:#34d39922;color:#34d399;border:1px solid #34d39955">EUobserver</a></div></a></div><div class="more-count">+ 2 more stories in this category</div></div><div class="theme-section" style="animation-delay:0.30000000000000004s"><div class="theme-header" style="border-left:4px solid #34d399;padding-left:1rem"><div class="theme-title-row"><h2 class="theme-title" style="color:#34d399">Economy & Trade</h2><span class="theme-count">4 stories</span></div><p class="theme-summary">4 stories across 4 outlets: Euronews, Deutsche Welle, France 24, BBC News.</p></div><div class="stories-grid"><a class="story-card" href="http://www.euronews.com/video/2026/03/20/latest-news-bulletin-march-20th-2026-morning" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Fri, 20 Mar 2026 07:00:33</div><div class="card-title">Latest news bulletin | March 20th, 2026 – Morning</div><div class="card-desc">Catch up with the most important stories from around Europe and beyond this March 20th, 2026 - latest news, breaking news, World, Business, Entertainment, Politics, Culture, Travel...</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="https://www.dw.com/en/germany-considers-windfall-tax-amid-rising-fuel-prices/a-76437425?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="card-date">Thu, 19 Mar 2026 16:39:00</div><div class="card-title">Germany considers windfall tax amid rising fuel prices</div><div class="card-desc">Germany is set to pass legislation to put the brakes on rapidly rising gas prices. Berlin says a tax on petroleum profiteers is under consideration, but adds that it's too early fo...</div><div class="card-footer"><a class="citation" href="https://www.dw.com/en/" target="_blank" rel="noopener" style="background:#f9731622;color:#f97316;border:1px solid #f9731655">Deutsche Welle</a></div></a><a class="story-card" href="https://www.france24.com/en/culture/20260320-k-pop-megastars-bts-drop-new-album-ahead-of-comeback-mega-concert" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="card-date">Fri, 20 Mar 2026 00:05:24</div><div class="card-title">K-pop megastars BTS drop new album ahead of comeback mega-concert</div><div class="card-desc">After an almost four-year hiatus, K-pop icons BTS dropped a new album Friday ahead of an open-air concert in Seoul expected to draw more than a quarter of a million fans from aroun...</div><div class="card-footer"><a class="citation" href="https://www.france24.com/en/" target="_blank" rel="noopener" style="background:#a78bfa22;color:#a78bfa;border:1px solid #a78bfa55">France 24</a></div></a><a class="story-card" href="https://www.bbc.com/news/articles/c24de9e97vno?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="card-date">Thu, 19 Mar 2026 05:59:49</div><div class="card-title">How Europe sleepwalked into yet another energy crisis</div><div class="card-desc">It is not the first time that there has been deep energy-linked frustration in the heart of Europe.</div><div class="card-footer"><a class="citation" href="https://www.bbc.com/news" target="_blank" rel="noopener" style="background:#facc1522;color:#facc15;border:1px solid #facc1555">BBC News</a></div></a></div></div><div class="theme-section" style="animation-delay:0.4s"><div class="theme-header" style="border-left:4px solid #f472b6;padding-left:1rem"><div class="theme-title-row"><h2 class="theme-title" style="color:#f472b6">Society, Science & Environment</h2><span class="theme-count">8 stories</span></div><p class="theme-summary">8 stories across 5 outlets: Euronews, Deutsche Welle, France 24, BBC News and 1 more.</p></div><div class="stories-grid"><a class="story-card" href="http://www.euronews.com/video/2026/03/19/watch-new-10-amsterdamberlin-train-service-by-govolta-takes-off" target="_blank" rel="noopener" style="--src-color:#38bdf8"><div class="card-date">Thu, 19 Mar 2026 21:05:04</div><div class="card-title">Watch: New €10 Amsterdam–Berlin train service by Govolta takes off</div><div class="card-desc">A new low-cost rail service linking Amsterdam and Berlin was launched on 19 March as GoVolta’s first train departed from Amsterdam Centraal.</div><div class="card-footer"><a class="citation" href="https://www.euronews.com" target="_blank" rel="noopener" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855">Euronews</a></div></a><a class="story-card" href="https://www.dw.com/en/k-pop-stars-bts-release-new-album-ahead-of-comeback-concert/a-76443367?maca=en-rss-en-all-1573-xml-mrss" target="_blank" rel="noopener" style="--src-color:#f97316"><div class="card-date">Fri, 20 Mar 2026 05:57:00</div><div class="card-title">K-Pop stars BTS release new album ahead of comeback concert</div><div class="card-desc">The BTS comeback concert, to be held at Seoul's historic Gwanghwamun Square, is expected to draw around 260,000 people. The event will be livestreamed by Netflix in around 190 coun...</div><div class="card-footer"><a class="citation" href="https://www.dw.com/en/" target="_blank" rel="noopener" style="background:#f9731622;color:#f97316;border:1px solid #f9731655">Deutsche Welle</a></div></a><a class="story-card" href="https://www.france24.com/en/tv-shows/sports/20260320-lyon-crash-out-of-europa-league" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="card-date">Fri, 20 Mar 2026 06:48:57</div><div class="card-title">Lyon crash out of Europa League</div><div class="card-desc">Lyon have been eliminated from the Europa League following its 2-0 home loss to Celta Vigo in the second leg of the round of 16 (1-1 in the first leg). Lyon were hampered by Moussa...</div><div class="card-footer"><a class="citation" href="https://www.france24.com/en/" target="_blank" rel="noopener" style="background:#a78bfa22;color:#a78bfa;border:1px solid #a78bfa55">France 24</a></div></a><a class="story-card" href="https://www.france24.com/en/senegal-not-losing-without-a-fight" target="_blank" rel="noopener" style="--src-color:#a78bfa"><div class="card-date">Thu, 19 Mar 2026 21:41:06</div><div class="card-title">Senegal not losing without a fight</div><div class="card-desc">In tonight's program, a joint statement from the Democratic Republic of Congo and Rwanda, where both nations have agreed to take steps to advance last year's stalled peace accord. ...</div><div class="card-footer"><a class="citation" href="https://www.france24.com/en/" target="_blank" rel="noopener" style="background:#a78bfa22;color:#a78bfa;border:1px solid #a78bfa55">France 24</a></div></a><a class="story-card" href="https://www.bbc.com/news/articles/c33ln4mp1p2o?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="card-date">Thu, 19 Mar 2026 21:52:36</div><div class="card-title">Denmark planned to blow up Greenland runways if US invaded, reports say</div><div class="card-desc">Denmark's public broadcaster reports that the US operation to seize Venezuela's leader sparked fears it would act against Greenland.</div><div class="card-footer"><a class="citation" href="https://www.bbc.com/news" target="_blank" rel="noopener" style="background:#facc1522;color:#facc15;border:1px solid #facc1555">BBC News</a></div></a><a class="story-card" href="https://www.bbc.com/news/articles/cvge3mxgvwwo?at_medium=RSS&at_campaign=rss" target="_blank" rel="noopener" style="--src-color:#facc15"><div class="card-date">Thu, 19 Mar 2026 20:14:30</div><div class="card-title">Norway crown princess to address Epstein links as son's rape trial closes</div><div class="card-desc">Mette-Marit gives a much-anticipated interview, due to be broadcast on Friday.</div><div class="card-footer"><a class="citation" href="https://www.bbc.com/news" target="_blank" rel="noopener" style="background:#facc1522;color:#facc15;border:1px solid #facc1555">BBC News</a></div></a></div><div class="more-count">+ 2 more stories in this category</div></div></div>
-<footer>
-<span>Europe Briefing - Friday 20 March 2026</span>
-<span><a href="https://www.euronews.com" target="_blank">Euronews</a> &middot; <a href="https://www.dw.com/en/" target="_blank">Deutsche Welle</a> &middot; <a href="https://www.france24.com/en/" target="_blank">France 24</a> &middot; <a href="https://www.swissinfo.ch/eng" target="_blank">SwissInfo</a> &middot; <a href="https://euobserver.com" target="_blank">EUobserver</a> &middot; <a href="https://www.bbc.com/news" target="_blank">BBC News</a> &middot; <a href="https://www.theguardian.com" target="_blank">The Guardian</a></span>
-</footer>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span>🔴 LIVE BRIEFING [MARCH 20, 2026]: RUSSIA LAUNCHES 156 DRONES OVERNIGHT; UKRAINE INTERCEPTS 133</span>
+            <span>⚠️ ENERGY ALERT: IRAN WAR SENDS OIL PRICES SOARING; EU AIRLINES DRAW UP CONTINGENCY PLANS</span>
+            <span>🔍 BBC VERIFY: INVESTIGATING SATELLITE IMAGE RESTRICTIONS OVER MIDDLE EAST CONFLICT ZONES</span>
+            <span>⚡ DW: EU COMMISSION FLOATS €30BN INVESTMENT BOOSTER FOR DECARBONIZATION</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="analysis-box">
+            <h1>The Continental Stress Test</h1>
+            <p>In 2026, the European information landscape is no longer about "passive reading." It is about <strong>Verifying</strong> the truth in a war-torn digital space, <strong>Monitoring</strong> global energy shifts through the Mediterranean, and <strong>Defending</strong> the literal borders of the East. This dashboard synthesizes the four pillars of modern European sovereignty.</p>
+        </header>
+
+        <div id="news-grid" class="grid"></div>
+    </div>
+
+    <script>
+        const newsSources = [
+            { "name": "BBC Verify", "tag": "fact-check", "color": "#bb1919", "url": "https://www.bbc.com/news/verify", "flavor": "Clinical OSINT. Proving what is real when the fog of war and AI-generated noise is at its thickest." },
+            { "name": "France 24", "tag": "security/diplomacy", "color": "#a78bfa", "url": "https://www.france24.com/en/", "flavor": "The bridge to the Global South. Tracking the impact of the Iran war on European energy and migration." },
+            { "name": "Deutsche Welle", "tag": "economy", "color": "#00adff", "url": "https://www.dw.com/en/", "flavor": "The industrial soul. Analyzing the €30bn carbon shift and the survival of the EU trade bloc." },
+            { "name": "Kyiv Independent", "tag": "security/defense", "color": "#ffd700", "url": "https://kyivindependent.com/", "flavor": "The frontline of sovereignty. Reporting from the edge where European democracy meets physical force." }
+        ];
+
+        const container = document.getElementById('news-grid');
+        newsSources.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.setProperty('--clr', s.color);
+            card.innerHTML = `<span class="tag">${s.tag}</span><h3>${s.name}</h3><p class="flavor">${s.flavor}</p><a href="${s.url}" class="btn">Access Intel</a>`;
+            container.appendChild(card);
+        });
+    </script>
 </body>
 </html>
