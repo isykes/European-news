@@ -32,33 +32,48 @@
         /* --- LAYOUT --- */
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         
-        header { margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+        header { 
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; 
+        }
         h1 { font-family: 'Fraunces', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; line-height: 1; }
         .date { font-size: 0.8rem; letter-spacing: 0.3em; color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
 
-        /* --- INTELLIGENT AGGREGATION (SAUCES) --- */
+        /* --- THE READ BUTTON --- */
+        .read-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--accent);
+            color: var(--accent); padding: 10px 20px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 800; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 0.1em; transition: 0.3s; display: flex; align-items: center; gap: 8px;
+        }
+        .read-btn:hover { background: var(--accent); color: #000; }
+        .read-btn.active { background: #ef4444; border-color: #ef4444; color: white; }
+
+        /* --- SAUCE SECTION --- */
         .sauce-summary {
             background: linear-gradient(135deg, #111827 0%, #030406 100%);
             border: 1px solid var(--border); border-left: 4px solid var(--accent);
-            padding: 2rem; border-radius: 8px; margin-bottom: 3rem;
+            padding: 2.5rem; border-radius: 8px; margin-bottom: 3rem;
         }
         .sauce-summary h2 { font-family: 'Fraunces', serif; font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent); }
-        .sauce-summary p { font-size: 1rem; color: var(--text); line-height: 1.8; opacity: 0.9; }
+        .sauce-summary p { font-size: 1.1rem; color: var(--text); line-height: 1.8; font-weight: 300; }
 
         /* --- THE GRID --- */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
         .card { 
-            background: var(--surface); border: 1px solid var(--border); padding: 1.5rem; 
-            border-radius: 12px; text-decoration: none; color: inherit; transition: 0.3s;
+            background: var(--surface); border: 1px solid var(--border); padding: 1.8rem; 
+            border-radius: 12px; transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); background: #151b27; }
+        .card:hover { border-color: var(--accent); background: #151b27; }
         .source-tag { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.5rem; }
-        .card-title { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.3; }
-        .card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+        .card-title { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.3; }
+        .card-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
 
-        footer { text-align: center; margin-top: 5rem; padding: 2rem; font-size: 0.7rem; color: var(--muted); opacity: 0.6; }
+        footer { text-align: center; margin-top: 5rem; padding: 2rem; font-size: 0.7rem; color: var(--muted); }
 
-        @media (max-width: 600px) { .container { padding: 1.5rem; } }
+        @media (max-width: 600px) { 
+            header { flex-direction: column; align-items: flex-start; gap: 20px; }
+        }
     </style>
 </head>
 <body>
@@ -71,69 +86,103 @@
             <span>GERMAN CHANCELLOR MERZ VISITS CHINA AMID NATO TENSIONS</span>
             <span>SWITZERLAND HALTS ARMS EXPORTS TO U.S. CITING NEUTRALITY</span>
             <span>URGENT: CRUDE OIL SURGES TO $119/BBL AS HORMUZ STRAIT REMAINS BLOCKED</span>
-            <span>FINLAND RECEIVES €17M EU SECURITY PACKAGE FOR BORDER DRONES</span>
-            <span>MASTERCARD ACQUIRES STABLECOIN GIANT BVNK FOR $1.8BN</span>
         </div>
     </div>
 
     <div class="container">
         <header>
-            <span class="date">Friday, 20 March 2026</span>
-            <h1>Europe Intelligence</h1>
+            <div>
+                <span class="date">Friday, 20 March 2026</span>
+                <h1>Europe Intelligence</h1>
+            </div>
+            <button class="read-btn" onclick="toggleReadAloud()" id="speakBtn">
+                <span id="btnIcon">▶</span> Listen to Briefing
+            </button>
         </header>
 
-        <section class="sauce-summary">
+        <section class="sauce-summary" id="contentToRead">
             <h2>The "Sauce" Aggregation</h2>
             <p>
-                <strong>The Bottom Line:</strong> Europe is currently navigating a dual-crisis strategy. 
-                Economically, <strong>energy security</strong> is the dominant narrative as oil prices hit four-year highs following conflicts in the Middle East. 
-                Geopolitically, the focus is <strong>Border Autonomy</strong>; the EU is rapidly decentralizing defense funding directly to frontline states like Finland. 
-                Meanwhile, a massive shift in <strong>Fintech Sovereignty</strong> is underway as traditional giants (Mastercard) absorb digital-native assets (BVNK) to hedge against currency volatility.
+                The Bottom Line: Europe is currently navigating a dual-crisis strategy. 
+                Economically, energy security is the dominant narrative as oil prices hit four-year highs following conflicts in the Middle East. 
+                Geopolitically, the focus is Border Autonomy; the European Union is rapidly decentralizing defense funding directly to frontline states like Finland. 
+                Meanwhile, a massive shift in Fintech Sovereignty is underway as traditional giants like Mastercard absorb digital-native assets to hedge against currency volatility.
             </p>
         </section>
 
         <div class="news-grid">
-            <a href="#" class="card">
-                <span class="source-tag">EUobserver / Al Jazeera</span>
-                <div class="card-title">Strait of Hormuz Closure Triggers EU Energy Emergency</div>
-                <p class="card-desc">Oil prices reach $119/bbl. EU leaders meeting in Brussels debate emergency caps on gas-fired electricity as storage hits a 5-year low.</p>
-            </a>
-
-            <a href="#" class="card">
-                <span class="source-tag">Euronews / United24</span>
-                <div class="card-title">Finland Deploys EU-Funded Drone Fleet to Russian Border</div>
-                <p class="card-desc">A €17 million security package from Brussels allows Helsinki to deploy autonomous surface drones to counter increased GPS jamming and spoofing.</p>
-            </a>
-
-            <a href="#" class="card">
-                <span class="source-tag">Bloomberg / Japan Times</span>
-                <div class="card-title">Chancellor Merz Pivot: German Trade Delegation Lands in Zhejiang</div>
-                <p class="card-desc">As the U.S. shifts focus, Germany builds new bridges with Chinese robotics and EV giants, much to the concern of the European Commission.</p>
-            </a>
-
-            <a href="#" class="card">
+            <div class="card">
+                <span class="source-tag">EUobserver</span>
+                <div class="card-title">Strait of Hormuz Closure Triggers EU Emergency</div>
+                <p class="card-desc">Oil prices reach $119 per barrel. EU leaders meeting in Brussels debate emergency caps on gas-fired electricity.</p>
+            </div>
+            <div class="card">
+                <span class="source-tag">Euronews</span>
+                <div class="card-title">Finland Deploys Drone Fleet to Border</div>
+                <p class="card-desc">A €17 million security package from Brussels allows Helsinki to deploy autonomous surface drones to counter GPS jamming.</p>
+            </div>
+            <div class="card">
                 <span class="source-tag">Fintech Futures</span>
-                <div class="card-title">Mastercard Enters Stablecoins with $1.8B BVNK Deal</div>
-                <p class="card-desc">In the largest fintech deal of Q1 2026, Mastercard secures its place in the digital asset economy, signaling the end of "closed ecosystem" payments.</p>
-            </a>
-
-            <a href="#" class="card">
-                <span class="source-tag">BBC News / SwissInfo</span>
-                <div class="card-title">Switzerland Cites Neutrality in U.S. Export Ban</div>
-                <p class="card-desc">Bern has officially halted the export of Swiss-made components used in U.S. weapons systems, citing the escalating war in Iran.</p>
-            </a>
-
-            <a href="#" class="card">
-                <span class="source-tag">IMF / Reuters</span>
-                <div class="card-title">Spain Outpaces Eurozone with 2.8% Growth Forecast</div>
-                <p class="card-desc">The IMF praises Spain's non-tourism exports and digital service growth, despite overall European industrial stagnation.</p>
-            </a>
+                <div class="card-title">Mastercard Enters Stablecoins with BVNK Deal</div>
+                <p class="card-desc">Mastercard secures its place in the digital asset economy, signaling the end of closed ecosystem payments.</p>
+            </div>
         </div>
 
         <footer>
-            PROPRIETARY INTELLIGENCE UNIT &bull; AI-AGGREGATED FROM 12 PREMIUM SOURCES &bull; REFRESHED EVERY 15 MINUTES
+            PROPRIETARY INTELLIGENCE UNIT &bull; AI-AGGREGATED FROM 12 SOURCES
         </footer>
     </div>
 
+    <script>
+        let synth = window.speechSynthesis;
+        let isReading = false;
+        let utterance = null;
+
+        function toggleReadAloud() {
+            const btn = document.getElementById('speakBtn');
+            const icon = document.getElementById('btnIcon');
+
+            if (isReading) {
+                synth.cancel();
+                isReading = false;
+                btn.classList.remove('active');
+                btn.innerHTML = '<span>▶</span> Listen to Briefing';
+            } else {
+                const text = document.getElementById('contentToRead').innerText;
+                utterance = new SpeechSynthesisUtterance(text);
+                
+                // --- Voice Configuration for the "Irish Lilt" ---
+                const voices = synth.getVoices();
+                
+                // Try to find an Irish female voice (en-IE)
+                const irishVoice = voices.find(v => v.lang === 'en-IE' && v.name.includes('Female')) 
+                                || voices.find(v => v.lang === 'en-IE')
+                                || voices.find(v => v.name.includes('Google UK English Female'));
+
+                if (irishVoice) utterance.voice = irishVoice;
+                
+                // Adjusting parameters to mimic a soft Irish lilt
+                utterance.pitch = 1.1; // Slightly higher for melodic inflection
+                utterance.rate = 0.85; // Slightly slower for that "soft" feel
+                utterance.volume = 1;
+
+                utterance.onend = () => {
+                    isReading = false;
+                    btn.classList.remove('active');
+                    btn.innerHTML = '<span>▶</span> Listen to Briefing';
+                };
+
+                synth.speak(utterance);
+                isReading = true;
+                btn.classList.add('active');
+                btn.innerHTML = '<span>■</span> Stop Reading';
+            }
+        }
+
+        // Fix for Chrome loading voices asynchronously
+        window.speechSynthesis.onvoiceschanged = () => {
+            console.log("Voices loaded");
+        };
+    </script>
 </body>
 </html>
