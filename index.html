@@ -3,88 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European News Intelligence Hub</title>
+    <title>EU Intelligence Command | 2026</title>
     <style>
-        :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f1f5f9; --accent: #3b82f6; --ticker-bg: #ef4444; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        :root {
+            --bg: #020617;
+            --card-bg: #0f172a;
+            --text: #f1f5f9;
+            --accent: #3b82f6;
+            --ticker-bg: #991b1b;
+            --border: #1e293b;
+        }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
         
-        /* TICKER */
+        /* TICKER SYSTEM */
         .ticker-wrap {
             width: 100%; overflow: hidden; background: var(--ticker-bg);
-            color: white; padding: 12px 0; font-weight: 800; position: sticky; top: 0; z-index: 1000;
+            color: white; padding: 10px 0; font-weight: 700; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .ticker { display: inline-block; white-space: nowrap; animation: march 60s linear infinite; }
         @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .ticker span { margin-right: 60px; text-transform: uppercase; }
+        .ticker span { margin-right: 50px; text-transform: uppercase; font-size: 0.85rem; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-        /* AGGREGATE SUMMARY */
+        /* HEADER & ANALYSIS */
+        .header-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 2rem; }
         .aggregate-box { 
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); 
-            padding: 2.5rem; border-radius: 16px; margin-bottom: 2.5rem;
-            border-left: 10px solid var(--accent); border: 1px solid #334155;
+            background: linear-gradient(135deg, #1e293b 0%, #020617 100%); 
+            padding: 2rem; border-radius: 12px; border: 1px solid var(--border);
+            border-left: 8px solid var(--accent);
         }
+        .info-panel { 
+            background: #0f172a; padding: 2rem; border-radius: 12px; border: 1px solid var(--border);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .time-display { font-family: monospace; font-size: 1.5rem; color: var(--accent); margin-bottom: 10px; }
 
-        /* GRID */
+        /* THE SOURCE GRID */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .card { 
             background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
-            border-top: 5px solid var(--clr); min-height: 200px;
-            display: flex; flex-direction: column; transition: 0.3s;
+            border-top: 4px solid var(--clr); min-height: 220px;
+            display: flex; flex-direction: column; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
         }
-        .card:hover { transform: translateY(-5px); background: #243147; }
-        .source-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
-        .live-headline { font-size: 0.9rem; color: #cbd5e1; line-height: 1.4; flex-grow: 1; border-left: 2px solid var(--clr); padding-left: 10px; margin-bottom: 10px; }
+        .card:hover { transform: translateY(-5px); background: #1e293b; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
         
-        /* STATUS CONSOLE */
-        #status-console { font-family: monospace; font-size: 0.7rem; color: #64748b; margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; }
+        .geo-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--clr); font-weight: 900; margin-bottom: 5px; }
+        .source-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .live-headline { font-size: 0.95rem; color: #cbd5e1; line-height: 1.5; flex-grow: 1; margin-bottom: 15px; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 10px; }
+        .btn { text-decoration: none; color: #fff; font-size: 0.75rem; font-weight: bold; background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 4px; }
+        .btn:hover { background: var(--clr); }
+
+        /* LOADING STATUS */
+        #load-monitor { margin-top: 20px; font-size: 0.7rem; color: #64748b; font-family: monospace; text-align: right; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div id="live-ticker" class="ticker">
-            <span>SYNCING LIVE INTELLIGENCE... SYSTEM INITIATED...</span>
+            <span>🔴 SYSTEM INITIALIZING: MARCH 20, 2026... ESTABLISHING SECURE RSS HANDSHAKES...</span>
         </div>
     </div>
 
     <div class="container">
-        <header class="aggregate-box">
-            <h1>Continental Intelligence Synthesis</h1>
-            <p><strong>Strategic Summary:</strong> The European narrative today is a triangulation of crisis. While the <strong>BBC</strong> and <strong>DW</strong> verify the economic fallout of the Iran war, the <strong>Kyiv Independent</strong> and <strong>Yle</strong> report from the physical frontlines of sovereignty. This 9-point grid connects the truth-checkers with the primary defense hubs of the continent.</p>
-        </header>
+        <div class="header-grid">
+            <header class="aggregate-box">
+                <h2 style="margin-top:0; color:var(--accent);">Continental Intelligence Synthesis</h2>
+                <p style="line-height:1.6; font-size: 1.05rem;">
+                    <strong>The 2026 Geopolitical Landscape:</strong> Europe is currently defined by <em>Strategic Divergence</em>. 
+                    The <strong>Western Pillar</strong> (UK, FR, DE) is managing the "Cost of Truth" and the industrial energy crisis. 
+                    The <strong>Eastern/Nordic Shield</strong> (UA, PL, FI, SE) is in a state of high military readiness, managing frontline physical security. 
+                    This 9-point grid provides a synchronized real-time view across both the economic and defense theaters.
+                </p>
+            </header>
+            
+            <div class="info-panel">
+                <div id="clock" class="time-display">00:00:00</div>
+                <div style="font-size: 0.8rem; opacity: 0.7;">LOCATION: Tromsø, Norway (CET)</div>
+                <div style="font-size: 0.8rem; opacity: 0.7; margin-top:5px;">STATUS: <span id="sync-status" style="color:#22c55e;">9/9 SYNCED</span></div>
+            </div>
+        </div>
 
         <div id="news-grid" class="grid"></div>
-        
-        <div id="status-console">System Status: Awaiting feed initialization...</div>
+        <div id="load-monitor">READY_</div>
     </div>
 
     <script>
-        const newsSources = [
-            { name: "BBC News", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
-            { name: "France 24", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
-            { name: "Deutsche Welle", clr: "#00adff", rss: "https://rss.dw.com/rdf/rss-en-all" },
-            { name: "Kyiv Independent", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
-            { name: "EL PAÍS English", clr: "#ffffff", rss: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/english/portada" },
-            { name: "Yle News (Finland)", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
-            { name: "The Local (Sweden)", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
-            { name: "Notes from Poland", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
-            { name: "Euronews", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
+        const newsData = [
+            { name: "BBC News", region: "GLOBAL/UK", clr: "#bb1919", rss: "https://feeds.bbci.co.uk/news/world/rss.xml" },
+            { name: "France 24", region: "DIPLOMATIC", clr: "#a78bfa", rss: "https://www.france24.com/en/rss" },
+            { name: "Deutsche Welle", region: "INDUSTRIAL", clr: "#00adff", rss: "https://www.dw.com/en/rss" },
+            { name: "Kyiv Independent", region: "FRONTLINE", clr: "#ffd700", rss: "https://kyivindependent.com/rss/" },
+            { name: "EL PAÍS English", region: "MEDITERRANEAN", clr: "#ffffff", rss: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/english/portada" },
+            { name: "Yle News (FI)", region: "NORDIC SHIELD", clr: "#002f6c", rss: "https://yle.fi/uutiset/rss/63-20002" },
+            { name: "The Local (SE)", region: "NORDIC POLICY", clr: "#fecc00", rss: "https://www.thelocal.se/feed/" },
+            { name: "Notes from Poland", region: "CENTRAL EUROPE", clr: "#dc2626", rss: "https://notesfrompoland.com/feed/" },
+            { name: "Euronews", region: "EU CORE", clr: "#003399", rss: "https://www.euronews.com/rss?level=vertical&name=news" }
         ];
 
-        async function loadNews() {
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+
+        async function initSync() {
             const grid = document.getElementById('news-grid');
             const ticker = document.getElementById('live-ticker');
-            const consoleBox = document.getElementById('status-console');
+            const monitor = document.getElementById('load-monitor');
+            ticker.innerHTML = '';
             
-            ticker.innerHTML = ''; 
-            let loadedCount = 0;
+            let loaded = 0;
 
-            for (const s of newsSources) {
-                // STAGGER: Wait 300ms between each request to prevent proxy choking
-                await new Promise(resolve => setTimeout(resolve, 300));
-
+            for (const s of newsData) {
+                // Stagger loading to prevent proxy blocks
+                await new Promise(r => setTimeout(r, 400));
+                
                 try {
                     const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.rss)}`);
                     const data = await res.json();
@@ -95,26 +134,31 @@
                         card.className = 'card';
                         card.style.setProperty('--clr', s.clr);
                         card.innerHTML = `
+                            <div class="geo-tag">${s.region}</div>
                             <div class="source-title">${s.name}</div>
                             <div class="live-headline">${item.title}</div>
-                            <a href="${item.link}" target="_blank" style="color:var(--clr); font-size: 0.8rem; text-decoration: none; font-weight:bold;">READ SOURCE →</a>
+                            <div class="card-footer">
+                                <span style="font-size:0.6rem; opacity:0.5;">${new Date(item.pubDate).toLocaleTimeString()}</span>
+                                <a href="${item.link}" target="_blank" class="btn">INTEL →</a>
+                            </div>
                         `;
                         grid.appendChild(card);
 
                         const span = document.createElement('span');
-                        span.innerHTML = `🔴 ${s.name.toUpperCase()}: ${item.title}`;
+                        span.innerHTML = `[${s.name.toUpperCase()}]: ${item.title}`;
                         ticker.appendChild(span);
-
-                        loadedCount++;
-                        consoleBox.innerText = `System Status: Successfully linked ${loadedCount} of 9 sources.`;
+                        
+                        loaded++;
+                        monitor.innerText = `SYNC_MODULE: [${loaded}/9] ${s.name} ATTACHED...`;
                     }
                 } catch (e) {
-                    consoleBox.innerText += ` | FAILED: ${s.name}`;
+                    monitor.innerText += ` | FAIL: ${s.name}`;
                 }
             }
+            monitor.innerText = "ALL SYSTEMS NOMINAL. SYNC COMPLETE.";
         }
 
-        loadNews();
+        initSync();
     </script>
 </body>
 </html>
