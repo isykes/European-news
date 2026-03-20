@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European News OS: 9-Source Sync</title>
+    <title>European News Intelligence Hub</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f1f5f9;
-            --accent: #3b82f6;
-            --ticker-bg: #ef4444;
-        }
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text: #f1f5f9; --accent: #3b82f6; --ticker-bg: #ef4444; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
         
         /* TICKER */
@@ -36,30 +30,34 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .card { 
             background: var(--card-bg); border-radius: 12px; padding: 1.5rem; 
-            border-top: 5px solid var(--clr); min-height: 180px;
-            display: flex; flex-direction: column; justify-content: space-between;
+            border-top: 5px solid var(--clr); min-height: 200px;
+            display: flex; flex-direction: column; transition: 0.3s;
         }
+        .card:hover { transform: translateY(-5px); background: #243147; }
         .source-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; color: #fff; }
-        .live-headline { font-size: 0.9rem; color: #cbd5e1; line-height: 1.4; margin-bottom: 10px; border-left: 2px solid var(--clr); padding-left: 10px; }
-        .status-msg { font-size: 0.75rem; color: #64748b; font-style: italic; }
+        .live-headline { font-size: 0.9rem; color: #cbd5e1; line-height: 1.4; flex-grow: 1; border-left: 2px solid var(--clr); padding-left: 10px; margin-bottom: 10px; }
+        
+        /* STATUS CONSOLE */
+        #status-console { font-family: monospace; font-size: 0.7rem; color: #64748b; margin-top: 20px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div id="live-ticker" class="ticker">
-            <span>INITIALIZING GLOBAL SYNC... PLEASE WAIT...</span>
+            <span>SYNCING LIVE INTELLIGENCE... SYSTEM INITIATED...</span>
         </div>
     </div>
 
     <div class="container">
         <header class="aggregate-box">
             <h1>Continental Intelligence Synthesis</h1>
-            <p><strong>Strategic Summary:</strong> Europe is currently navigating a high-friction landscape. While the West (BBC, DW, France 24) focuses on the economic and truth-verification impact of the Iran war, the East and North (Kyiv, Yle, Poland) are reporting on physical sovereignty and border security. This 9-point grid provides a 360-degree view of the continent's stability.</p>
+            <p><strong>Strategic Summary:</strong> The European narrative today is a triangulation of crisis. While the <strong>BBC</strong> and <strong>DW</strong> verify the economic fallout of the Iran war, the <strong>Kyiv Independent</strong> and <strong>Yle</strong> report from the physical frontlines of sovereignty. This 9-point grid connects the truth-checkers with the primary defense hubs of the continent.</p>
         </header>
 
-        <div id="news-grid" class="grid">
-            </div>
+        <div id="news-grid" class="grid"></div>
+        
+        <div id="status-console">System Status: Awaiting feed initialization...</div>
     </div>
 
     <script>
@@ -78,36 +76,40 @@
         async function loadNews() {
             const grid = document.getElementById('news-grid');
             const ticker = document.getElementById('live-ticker');
-            ticker.innerHTML = ''; // Clear initial message
+            const consoleBox = document.getElementById('status-console');
+            
+            ticker.innerHTML = ''; 
+            let loadedCount = 0;
 
             for (const s of newsSources) {
+                // STAGGER: Wait 300ms between each request to prevent proxy choking
+                await new Promise(resolve => setTimeout(resolve, 300));
+
                 try {
-                    // Fetch data
                     const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(s.rss)}`);
                     const data = await res.json();
                     
                     if (data.status === 'ok') {
                         const item = data.items[0];
-
-                        // Build Card
                         const card = document.createElement('div');
                         card.className = 'card';
                         card.style.setProperty('--clr', s.clr);
                         card.innerHTML = `
                             <div class="source-title">${s.name}</div>
                             <div class="live-headline">${item.title}</div>
-                            <div class="status-msg">Last Updated: ${new Date(item.pubDate).toLocaleTimeString()}</div>
-                            <a href="${item.link}" target="_blank" style="color:var(--clr); font-size: 0.8rem; margin-top:10px; text-decoration: none; font-weight:bold;">View Intel →</a>
+                            <a href="${item.link}" target="_blank" style="color:var(--clr); font-size: 0.8rem; text-decoration: none; font-weight:bold;">READ SOURCE →</a>
                         `;
                         grid.appendChild(card);
 
-                        // Add to Ticker
                         const span = document.createElement('span');
                         span.innerHTML = `🔴 ${s.name.toUpperCase()}: ${item.title}`;
                         ticker.appendChild(span);
+
+                        loadedCount++;
+                        consoleBox.innerText = `System Status: Successfully linked ${loadedCount} of 9 sources.`;
                     }
                 } catch (e) {
-                    console.error("Error loading " + s.name);
+                    consoleBox.innerText += ` | FAILED: ${s.name}`;
                 }
             }
         }
