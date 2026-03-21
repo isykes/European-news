@@ -1,0 +1,89 @@
+/* Comprehensive CSS for European News Website */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background: #0044cc;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 10px;
+}
+
+/* Navigation Styles */
+nav {
+    display: flex;
+    justify-content: center;
+    background: #003399;
+}
+
+nav a {
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    background: #0055ff;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+article {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+}
+
+/* Footer Styles */
+footer {
+    background: #0044cc;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    nav a {
+        padding: 10px;
+    }
+}
+
+/* Accessibility Enhancements */
+/* Ensure high contrast text and background for readability */
+body, h1, h2, h3 {
+    color: #000;
+}
+
+/* ARIA roles and attributes should be added in HTML instead of CSS for better accessibility */
