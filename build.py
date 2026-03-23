@@ -6,7 +6,7 @@ SOURCES = [
     {"name": "Euronews",       "url": "https://www.euronews.com",        "rss": "https://www.euronews.com/rss?format=mrss&level=vertical&name=news", "color": "#38bdf8"},
     {"name": "Deutsche Welle", "url": "https://www.dw.com/en/",           "rss": "https://rss.dw.com/xml/rss-en-all",                                 "color": "#f97316"},
     {"name": "France 24",      "url": "https://www.france24.com/en/",     "rss": "https://www.france24.com/en/rss",                                   "color": "#a78bfa"},
-    {"name": "SwissInfo",      "url": "https://www.swissinfo.ch/eng",     "rss": "https://www.swissinfo.ch/eng/rss/news",                             "color": "#f472b6"},
+    {"name": "SwissInfo",      "url": "https://www.swissinfo.ch/eng",     "rss": "https://www.swissinfo.ch/eng/rss/top_news",                             "color": "#f472b6"},
     {"name": "EUobserver",     "url": "https://euobserver.com",           "rss": "https://euobserver.com/rss",                                        "color": "#34d399"},
     {"name": "BBC News",       "url": "https://www.bbc.com/news",         "rss": "https://feeds.bbci.co.uk/news/world/europe/rss.xml",                "color": "#facc15"},
     {"name": "The Guardian",   "url": "https://www.theguardian.com",      "rss": "https://www.theguardian.com/world/europe-news/rss",                 "color": "#fb923c"},
